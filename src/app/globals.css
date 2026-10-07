@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* Tokens extraídos do atlashub.si e do editions.atlashub.si (fundo azul-noite, ciano de acento). */
+@theme {
+  --color-ink: #040c18;
+  --color-chat: #050f1c;
+  --color-panel: #071422;
+  --color-panel2: #0b2034;
+  --color-line: #234257;
+  --color-line2: #355b75;
+  --color-fg: #f5f8fd;
+  --color-mute: #bbc9da;
+  --color-dim: #87a2bd;
+  --color-sys: #b9e2f2;
+  --color-accent: #16d8ed;
+  --color-accent-ink: #031020;
+  --color-warn: #f5a524;
+  --color-agent-bg: #0e3346;
+  --color-agent-line: #1e5a6e;
+  --color-user-bg: #11283d;
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-fg);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+a {
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,390 @@
+{
+  "catalogVersion": "0.1.0",
+  "schemaVersion": 1,
+  "packs": [
+    {
+      "id": "PACK-001",
+      "slug": "clinic-appointment-confirmation",
+      "version": "0.1.0",
+      "status": "demo",
+      "name": "Confirmação de consultas",
+      "summary": "Lembra, confirma e remarca consultas pelo WhatsApp, liberta vagas para a lista de espera e passa para a equipa tudo o que for clínico.",
+      "locale": "pt-BR",
+      "segments": [
+        "saude",
+        "servicos"
+      ],
+      "equation": [
+        "receita",
+        "custos",
+        "controlo"
+      ],
+      "channels": [
+        "whatsapp"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Gatilho",
+          "description": "Consulta nas próximas 24 h"
+        },
+        {
+          "id": "reminder",
+          "label": "Lembrete",
+          "description": "Mensagem autorizada pelo paciente"
+        },
+        {
+          "id": "interpret",
+          "label": "Interpretar",
+          "description": "Intenção da resposta"
+        },
+        {
+          "id": "rules",
+          "label": "Regras e limites",
+          "description": "Agenda, horários e política da clínica"
+        },
+        {
+          "id": "human",
+          "label": "Revisão humana",
+          "description": "Só quando há exceção"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Agenda e registo atualizados"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "no-clinical-advice",
+          "rule": "Nunca dar aconselhamento clínico, diagnóstico ou indicação de medicação.",
+          "action": "handoff"
+        },
+        {
+          "id": "urgency",
+          "rule": "Perante sinais de urgência, indicar atendimento de urgência e passar à equipa com prioridade alta.",
+          "action": "handoff"
+        },
+        {
+          "id": "consent",
+          "rule": "Só enviar lembretes a pacientes com consentimento registado.",
+          "action": "block"
+        },
+        {
+          "id": "rules-only",
+          "rule": "Só remarcar dentro das regras da agenda; fora delas, propor contacto com a receção.",
+          "action": "handoff"
+        }
+      ],
+      "integrations": [
+        {
+          "id": "agenda",
+          "kind": "calendar",
+          "required": true,
+          "description": "Sistema de agenda da clínica com API ou exportação diária."
+        },
+        {
+          "id": "whatsapp",
+          "kind": "channel",
+          "required": true,
+          "description": "Número de WhatsApp da clínica via Atendimento.Center."
+        },
+        {
+          "id": "waitlist",
+          "kind": "list",
+          "required": false,
+          "description": "Lista de espera (folha, CRM ou agenda)."
+        }
+      ],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "appointments_per_month",
+            "label": "Consultas por mês",
+            "unit": "",
+            "default": 800,
+            "min": 0,
+            "max": 20000,
+            "step": 50
+          },
+          {
+            "key": "no_show_rate",
+            "label": "Taxa de faltas",
+            "unit": "%",
+            "default": 12,
+            "min": 0,
+            "max": 60,
+            "step": 1
+          },
+          {
+            "key": "no_show_reduction",
+            "label": "Redução hipotética de faltas",
+            "unit": "%",
+            "default": 30,
+            "min": 0,
+            "max": 90,
+            "step": 5
+          },
+          {
+            "key": "minutes_per_manual_confirmation",
+            "label": "Minutos por confirmação manual",
+            "unit": "min",
+            "default": 3,
+            "min": 0,
+            "max": 30,
+            "step": 1
+          },
+          {
+            "key": "avg_appointment_value",
+            "label": "Valor médio da consulta",
+            "unit": "BRL",
+            "default": 200,
+            "min": 0,
+            "max": 5000,
+            "step": 10
+          }
+        ],
+        "outputs": [
+          {
+            "key": "no_shows",
+            "label": "Faltas por mês com os números atuais",
+            "formula": "round(appointments_per_month * no_show_rate / 100)"
+          },
+          {
+            "key": "recovered_appointments",
+            "label": "Consultas/mês potencialmente recuperadas",
+            "formula": "round(no_shows * no_show_reduction / 100)"
+          },
+          {
+            "key": "recovered_revenue",
+            "label": "Receita/mês associada",
+            "unit": "BRL",
+            "formula": "recovered_appointments * avg_appointment_value"
+          },
+          {
+            "key": "manual_hours",
+            "label": "Horas/mês de confirmações manuais hoje",
+            "unit": "h",
+            "formula": "round(appointments_per_month * minutes_per_manual_confirmation / 60)"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números do lead. Não inclui implementação, ferramentas nem manutenção. Não é uma previsão nem um resultado garantido."
+      },
+      "clara": {
+        "intro": [
+          "Olá, sou a Clara. Pelo que me contou, a clínica perde consultas por faltas e as confirmações ainda são feitas à mão.",
+          "Preparei o pack Confirmação de consultas com um paciente fictício. Ajuste os números da clínica mais abaixo e carregue em Executar."
+        ],
+        "allDone": "Já viu os três cenários. O passo seguinte é medir isto com os números reais da clínica.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "Clínica · Saúde"
+          },
+          {
+            "label": "Canal",
+            "value": "WhatsApp"
+          },
+          {
+            "label": "Dor principal",
+            "value": "Faltas e confirmações manuais"
+          }
+        ]
+      },
+      "labels": {
+        "header": "Clínica Exemplo · WhatsApp",
+        "agent": "AGENTE · CLÍNICA EXEMPLO",
+        "customer": "ANA · PACIENTE FICTÍCIA"
+      },
+      "scenarios": [
+        {
+          "id": "confirm",
+          "label": "Paciente confirma",
+          "description": "Cenário 1 · confirmação simples",
+          "humanReview": "skip",
+          "claraAfter": "Este foi o caso simples. Quer ver uma remarcação, ou um paciente com uma questão clínica?",
+          "appointment": "apt-001",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Consulta amanhã · 10:00 · consulta de rotina"
+            },
+            {
+              "type": "agent",
+              "step": "reminder",
+              "text": "Oi, Ana! Lembramos sua consulta amanhã às 10:00 na Clínica Exemplo. Pode confirmar sua presença? Responda SIM ou diga se precisa remarcar.",
+              "tool": "agenda.get_appointment"
+            },
+            {
+              "type": "patient",
+              "step": "interpret",
+              "text": "Sim, confirmo. Obrigada!"
+            },
+            {
+              "type": "system",
+              "step": "interpret",
+              "text": "Intenção: confirmar presença"
+            },
+            {
+              "type": "system",
+              "step": "rules",
+              "text": "Sem conflitos na agenda · dentro das regras"
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Revisão humana não necessária"
+            },
+            {
+              "type": "agent",
+              "step": "done",
+              "text": "Confirmado! Até amanhã às 10:00. Se precisar alterar, é só responder esta mensagem.",
+              "tool": "agenda.update_status"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Agenda: CONFIRMADA · registro criado"
+            }
+          ],
+          "expect": {
+            "status": "confirmed",
+            "handoff": false
+          }
+        },
+        {
+          "id": "reschedule",
+          "label": "Paciente remarca",
+          "description": "Cenário 2 · remarcação dentro das regras",
+          "humanReview": "skip",
+          "claraAfter": "A vaga libertada vai para a lista de espera, por isso a falta não chega a acontecer. Teste agora uma exceção.",
+          "appointment": "apt-002",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Consulta amanhã · 15:00"
+            },
+            {
+              "type": "agent",
+              "step": "reminder",
+              "text": "Oi, Ana! Lembramos sua consulta amanhã às 15:00 na Clínica Exemplo. Pode confirmar sua presença? Responda SIM ou diga se precisa remarcar.",
+              "tool": "agenda.get_appointment"
+            },
+            {
+              "type": "patient",
+              "step": "interpret",
+              "text": "Amanhã não consigo. Dá para quinta-feira à tarde?"
+            },
+            {
+              "type": "system",
+              "step": "interpret",
+              "text": "Intenção: remarcar · preferência: quinta, tarde"
+            },
+            {
+              "type": "system",
+              "step": "rules",
+              "text": "Agenda: 2 horários livres na quinta à tarde",
+              "tool": "agenda.find_slots"
+            },
+            {
+              "type": "agent",
+              "step": "rules",
+              "text": "Tenho quinta-feira às 14:30 ou às 16:00. Qual você prefere?"
+            },
+            {
+              "type": "patient",
+              "step": "rules",
+              "text": "Às 16:00, por favor."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Dentro das regras · revisão humana não necessária"
+            },
+            {
+              "type": "agent",
+              "step": "done",
+              "text": "Pronto: sua consulta passou para quinta-feira às 16:00.",
+              "tool": "agenda.update_status"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Vaga de amanhã às 15:00 liberada para a lista de espera",
+              "tool": "waitlist.offer_slot"
+            }
+          ],
+          "expect": {
+            "status": "rescheduled",
+            "handoff": false
+          }
+        },
+        {
+          "id": "clinical-exception",
+          "label": "Exceção clínica",
+          "description": "Cenário 3 · o agente para e passa a uma pessoa",
+          "humanReview": "required",
+          "claraAfter": "Repare: perante uma questão clínica o agente pára e passa a uma pessoa. Estes limites são definidos pela sua equipa.",
+          "appointment": "apt-003",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Consulta amanhã · 09:30"
+            },
+            {
+              "type": "agent",
+              "step": "reminder",
+              "text": "Oi, Ana! Lembramos sua consulta amanhã às 09:30 na Clínica Exemplo. Pode confirmar sua presença? Responda SIM ou diga se precisa remarcar.",
+              "tool": "agenda.get_appointment"
+            },
+            {
+              "type": "patient",
+              "step": "interpret",
+              "text": "Confirmo, mas estou com muita dor desde ontem. Devo tomar alguma coisa até lá?"
+            },
+            {
+              "type": "system",
+              "step": "interpret",
+              "text": "Intenção: confirmar + questão clínica"
+            },
+            {
+              "type": "system",
+              "step": "rules",
+              "text": "Limite: o agente não dá aconselhamento clínico",
+              "guardrail": "no-clinical-advice"
+            },
+            {
+              "type": "agent",
+              "step": "rules",
+              "text": "Presença confirmada. Sobre a dor, vou passar agora sua mensagem para a equipe da clínica, que vai responder diretamente. Se for urgente, procure atendimento de urgência."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Encaminhado para a recepção · prioridade alta",
+              "tool": "team.handoff"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Agenda: CONFIRMADA · tarefa criada para a equipe",
+              "tool": "agenda.update_status"
+            }
+          ],
+          "expect": {
+            "status": "confirmed",
+            "handoff": true
+          }
+        }
+      ],
+      "source": "packs/clinic-appointment-confirmation"
+    }
+  ]
+}
