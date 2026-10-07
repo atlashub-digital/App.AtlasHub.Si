@@ -81,12 +81,11 @@ Requisitos: Node ≥ 22.
 
 ```bash
 git clone git@github.com:atlashub-digital/App.AtlasHub.Si.git && cd App.AtlasHub.Si
-npm install
+npm ci
 npm run dev            # http://localhost:3000
 ```
 
-> **Fazer uma vez:** o repositório foi criado sem `package-lock.json` (não havia acesso à rede no momento).
-> Depois do primeiro `npm install`, fazer commit do lockfile e trocar `npm install` por `npm ci` em `.github/workflows/ci.yml`.
+> O `package-lock.json` está no repositório e a CI usa `npm ci`. Ao adicionar ou atualizar dependências, usar `npm install <pacote>` e fazer commit do lockfile.
 
 Scripts:
 

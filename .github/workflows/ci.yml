@@ -11,8 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      # TODO: trocar por "npm ci" assim que o package-lock.json for commitado (ver README, "Primeiros passos").
-      - run: npm install
+      - run: npm ci
       - run: npm test
       - run: npm run lint
       - run: npm run typecheck
