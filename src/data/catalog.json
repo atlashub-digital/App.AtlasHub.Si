@@ -1,7 +1,186 @@
 {
-  "catalogVersion": "0.1.0",
+  "catalogVersion": "0.2.0",
   "schemaVersion": 1,
   "packs": [
+    {
+      "id": "PACK-003",
+      "slug": "administrative-secretary",
+      "version": "0.1.0",
+      "status": "demo",
+      "name": "Secretária Administrativa",
+      "summary": "Demonstração com dados fictícios: rascunho administrativo e organização de reunião. Serviço gerido pela AtlasHub; sem integração ativa.",
+      "locale": "pt-BR",
+      "segments": [
+        "servicos"
+      ],
+      "equation": [
+        "custos"
+      ],
+      "channels": [
+        "whatsapp"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Pedido",
+          "description": "Pedido fictício com consentimento"
+        },
+        {
+          "id": "interpret",
+          "label": "Preparar",
+          "description": "rascunho administrativo e organização de reunião"
+        },
+        {
+          "id": "human",
+          "label": "Aprovação humana",
+          "description": "Nenhum envio sem aprovação"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Rascunho entregue à equipa"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "human-approval",
+          "rule": "Nunca enviar mensagens, publicar ou assumir compromissos sem aprovação humana.",
+          "action": "handoff"
+        },
+        {
+          "id": "consent",
+          "rule": "Nenhuma comunicação sem consentimento registado.",
+          "action": "block"
+        }
+      ],
+      "integrations": [],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "volume_per_month",
+            "label": "Pedidos por mês",
+            "unit": "",
+            "default": 100,
+            "min": 0,
+            "max": 100000,
+            "step": 10
+          }
+        ],
+        "outputs": [
+          {
+            "key": "volume",
+            "label": "Pedidos por mês",
+            "formula": "volume_per_month"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números do lead. Não é uma previsão."
+      },
+      "clara": {
+        "intro": [
+          "Sou a Clara. A AtlasHub opera e supervisiona este serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma mensagem é enviada."
+        ],
+        "allDone": "Solicite um assessment para definir escopo e integrações. Este perfil ainda não é operacional.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "Serviços"
+          },
+          {
+            "label": "Modo",
+            "value": "Demo sem integração ativa"
+          }
+        ]
+      },
+      "labels": {
+        "header": "Empresa Fictícia · Demo",
+        "agent": "ASSISTENTE · DEMO",
+        "customer": "CLIENTE FICTÍCIO"
+      },
+      "scenarios": [
+        {
+          "id": "happy-path",
+          "label": "Pedido administrativo",
+          "description": "Dados fictícios; nenhuma ação externa",
+          "humanReview": "required",
+          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Pedido sintético recebido com consentimento"
+            },
+            {
+              "type": "patient",
+              "step": "interpret",
+              "text": "Prepare um próximo passo, por favor."
+            },
+            {
+              "type": "agent",
+              "step": "interpret",
+              "text": "Preparei um rascunho para revisão da equipa."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Aprovação obrigatória antes de qualquer envio",
+              "tool": "team.handoff"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Rascunho e tarefa humana registados; nenhum envio"
+            }
+          ],
+          "expect": {
+            "handoff": true
+          }
+        },
+        {
+          "id": "sensitive",
+          "label": "Pedido de envio sem aprovação",
+          "description": "Dados fictícios; nenhuma ação externa",
+          "humanReview": "required",
+          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Pedido sintético recebido com consentimento"
+            },
+            {
+              "type": "patient",
+              "step": "interpret",
+              "text": "Prepare um próximo passo, por favor."
+            },
+            {
+              "type": "agent",
+              "step": "interpret",
+              "text": "Preparei um rascunho para revisão da equipa."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Aprovação obrigatória antes de qualquer envio",
+              "tool": "team.handoff"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Rascunho e tarefa humana registados; nenhum envio"
+            }
+          ],
+          "expect": {
+            "handoff": true
+          }
+        }
+      ],
+      "source": "packs/administrative-secretary"
+    },
     {
       "id": "PACK-001",
       "slug": "clinic-appointment-confirmation",
@@ -385,6 +564,185 @@
         }
       ],
       "source": "packs/clinic-appointment-confirmation"
+    },
+    {
+      "id": "PACK-002",
+      "slug": "sales-assistant",
+      "version": "0.1.0",
+      "status": "demo",
+      "name": "Assistente Comercial",
+      "summary": "Demonstração com dados fictícios: qualificação de lead e proposta de próximo passo. Serviço gerido pela AtlasHub; sem integração ativa.",
+      "locale": "pt-BR",
+      "segments": [
+        "servicos"
+      ],
+      "equation": [
+        "custos"
+      ],
+      "channels": [
+        "whatsapp"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Pedido",
+          "description": "Pedido fictício com consentimento"
+        },
+        {
+          "id": "interpret",
+          "label": "Preparar",
+          "description": "qualificação de lead e proposta de próximo passo"
+        },
+        {
+          "id": "human",
+          "label": "Aprovação humana",
+          "description": "Nenhum envio sem aprovação"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Rascunho entregue à equipa"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "human-approval",
+          "rule": "Nunca enviar mensagens, publicar ou assumir compromissos sem aprovação humana.",
+          "action": "handoff"
+        },
+        {
+          "id": "consent",
+          "rule": "Nenhuma comunicação sem consentimento registado.",
+          "action": "block"
+        }
+      ],
+      "integrations": [],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "volume_per_month",
+            "label": "Pedidos por mês",
+            "unit": "",
+            "default": 100,
+            "min": 0,
+            "max": 100000,
+            "step": 10
+          }
+        ],
+        "outputs": [
+          {
+            "key": "volume",
+            "label": "Pedidos por mês",
+            "formula": "volume_per_month"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números do lead. Não é uma previsão."
+      },
+      "clara": {
+        "intro": [
+          "Sou a Clara. A AtlasHub opera e supervisiona este serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma mensagem é enviada."
+        ],
+        "allDone": "Solicite um assessment para definir escopo e integrações. Este perfil ainda não é operacional.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "Serviços"
+          },
+          {
+            "label": "Modo",
+            "value": "Demo sem integração ativa"
+          }
+        ]
+      },
+      "labels": {
+        "header": "Empresa Fictícia · Demo",
+        "agent": "ASSISTENTE · DEMO",
+        "customer": "CLIENTE FICTÍCIO"
+      },
+      "scenarios": [
+        {
+          "id": "happy-path",
+          "label": "Pedido administrativo",
+          "description": "Dados fictícios; nenhuma ação externa",
+          "humanReview": "required",
+          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Pedido sintético recebido com consentimento"
+            },
+            {
+              "type": "patient",
+              "step": "interpret",
+              "text": "Prepare um próximo passo, por favor."
+            },
+            {
+              "type": "agent",
+              "step": "interpret",
+              "text": "Preparei um rascunho para revisão da equipa."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Aprovação obrigatória antes de qualquer envio",
+              "tool": "team.handoff"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Rascunho e tarefa humana registados; nenhum envio"
+            }
+          ],
+          "expect": {
+            "handoff": true
+          }
+        },
+        {
+          "id": "sensitive",
+          "label": "Pedido de envio sem aprovação",
+          "description": "Dados fictícios; nenhuma ação externa",
+          "humanReview": "required",
+          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Pedido sintético recebido com consentimento"
+            },
+            {
+              "type": "patient",
+              "step": "interpret",
+              "text": "Prepare um próximo passo, por favor."
+            },
+            {
+              "type": "agent",
+              "step": "interpret",
+              "text": "Preparei um rascunho para revisão da equipa."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Aprovação obrigatória antes de qualquer envio",
+              "tool": "team.handoff"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Rascunho e tarefa humana registados; nenhum envio"
+            }
+          ],
+          "expect": {
+            "handoff": true
+          }
+        }
+      ],
+      "source": "packs/sales-assistant"
     }
   ]
 }
