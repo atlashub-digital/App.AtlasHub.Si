@@ -15,7 +15,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section aria-label="Catálogo de funções geridas" className="space-y-2"><h2 className="text-2xl font-bold">Colaboradores digitais geridos</h2><p>Rececionista Digital, Assistente Comercial e Secretária Administrativa: demonstração. Consultor Imobiliário, Assistente E-commerce, Marketing, Financeiro Administrativo e RH: planeados. Nenhum perfil é anunciado como operacional antes da homologação.</p></section>
+      <section aria-label="Catálogo de funções geridas" className="space-y-2"><h2 className="text-2xl font-bold">Colaboradores digitais geridos</h2><p>Oito colaboradores em demonstração: Rececionista Digital, Assistente Comercial, Secretária Administrativa, Consultor Imobiliário, Assistente E-commerce, Assistente de Marketing, Assistente Financeiro Administrativo e Assistente de RH. Em cada um, as ações com impacto externo exigem aprovação humana. Nenhum perfil é anunciado como operacional antes da homologação.</p></section>
       <nav className="flex gap-6"><Link href="/assessment">Falar com a Clara · Assessment</Link><Link href="/portal">Portal do cliente</Link></nav>
       <section aria-label="Packs disponíveis" className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {packs.map((pack) => (

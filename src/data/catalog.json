@@ -1,23 +1,25 @@
 {
-  "catalogVersion": "0.2.0",
+  "catalogVersion": "0.3.0",
   "schemaVersion": 1,
   "packs": [
     {
       "id": "PACK-003",
       "slug": "administrative-secretary",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "status": "demo",
       "name": "Secretária Administrativa",
-      "summary": "Demonstração com dados fictícios: rascunho administrativo e organização de reunião. Serviço gerido pela AtlasHub; sem integração ativa.",
-      "locale": "pt-BR",
+      "summary": "Colaborador digital gerido pela AtlasHub: pedido de reunião, email financeiro. Demonstração com dados fictícios; funcional em staging com sistemas sandbox.",
+      "locale": "pt-PT",
       "segments": [
-        "servicos"
+        "transversal"
       ],
       "equation": [
-        "custos"
+        "custos",
+        "velocidade"
       ],
       "channels": [
-        "whatsapp"
+        "email",
+        "interno"
       ],
       "commercial": {
         "cloud": true,
@@ -27,22 +29,27 @@
         {
           "id": "trigger",
           "label": "Pedido",
-          "description": "Pedido fictício com consentimento"
+          "description": "Entrada assinada pelo canal do cliente"
         },
         {
           "id": "interpret",
-          "label": "Preparar",
-          "description": "rascunho administrativo e organização de reunião"
+          "label": "Interpretar",
+          "description": "Intenção por regras (pt/en/es); IA opcional só quando as regras não reconhecem"
+        },
+        {
+          "id": "act",
+          "label": "Executar",
+          "description": "Ferramentas autorizadas no sistema do cliente"
         },
         {
           "id": "human",
-          "label": "Aprovação humana",
-          "description": "Nenhum envio sem aprovação"
+          "label": "Supervisão humana",
+          "description": "Aprovação ou passagem para uma pessoa"
         },
         {
           "id": "done",
           "label": "Concluir",
-          "description": "Rascunho entregue à equipa"
+          "description": "Resultado auditado e medido"
         }
       ],
       "guardrails": [
@@ -55,123 +62,170 @@
           "id": "consent",
           "rule": "Nenhuma comunicação sem consentimento registado.",
           "action": "block"
+        },
+        {
+          "id": "draft-only",
+          "rule": "O envio de email está proibido: só rascunhos.",
+          "action": "block"
+        },
+        {
+          "id": "forbidden-tools",
+          "rule": "Ações proibidas a este colaborador: mail.send.",
+          "action": "block"
         }
       ],
-      "integrations": [],
+      "integrations": [
+        {
+          "id": "mailbox",
+          "kind": "email",
+          "required": true,
+          "description": "Caixa de correio (leitura, etiquetas, rascunhos)"
+        },
+        {
+          "id": "calendar",
+          "kind": "calendar",
+          "required": true,
+          "description": "Agenda da equipa"
+        }
+      ],
       "metrics": {
         "inputs": [
           {
             "key": "volume_per_month",
             "label": "Pedidos por mês",
             "unit": "",
-            "default": 100,
+            "default": 300,
             "min": 0,
             "max": 100000,
             "step": 10
+          },
+          {
+            "key": "minutes_per_task",
+            "label": "Minutos por pedido hoje",
+            "unit": "min",
+            "default": 6,
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "key": "automatable_pct",
+            "label": "Pedidos tratados sem intervenção",
+            "unit": "%",
+            "default": 60,
+            "min": 0,
+            "max": 100,
+            "step": 5
           }
         ],
         "outputs": [
           {
-            "key": "volume",
-            "label": "Pedidos por mês",
-            "formula": "volume_per_month"
+            "key": "hours_saved",
+            "label": "Horas de equipa libertadas por mês",
+            "unit": "h",
+            "formula": "round(volume_per_month * minutes_per_task * automatable_pct / 100 / 60)"
           }
         ],
-        "disclaimer": "Hipótese calculada com os números do lead. Não é uma previsão."
+        "disclaimer": "Hipótese calculada com os números indicados. Não é uma previsão nem um resultado garantido."
       },
       "clara": {
         "intro": [
-          "Sou a Clara. A AtlasHub opera e supervisiona este serviço gerido.",
-          "Demonstração com dados fictícios; nenhuma mensagem é enviada."
+          "Sou a Clara. A AtlasHub opera e supervisiona o Secretária Administrativa como serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma ação real é executada."
         ],
-        "allDone": "Solicite um assessment para definir escopo e integrações. Este perfil ainda não é operacional.",
+        "allDone": "Solicite um assessment para definir âmbito, integrações e limites. Este colaborador está em demonstração, ainda não em piloto.",
         "context": [
           {
             "label": "Segmento",
-            "value": "Serviços"
+            "value": "transversal"
           },
           {
-            "label": "Modo",
-            "value": "Demo sem integração ativa"
+            "label": "Ações com aprovação",
+            "value": "calendar.hold"
           }
         ]
       },
       "labels": {
-        "header": "Empresa Fictícia · Demo",
-        "agent": "ASSISTENTE · DEMO",
-        "customer": "CLIENTE FICTÍCIO"
+        "header": "Escritório Fictício · Demo",
+        "agent": "SECRETÁRIA ADMINISTRATIVA · DEMO",
+        "customer": "PESSOA FICTÍCIA"
       },
       "scenarios": [
         {
-          "id": "happy-path",
-          "label": "Pedido administrativo",
-          "description": "Dados fictícios; nenhuma ação externa",
+          "id": "meeting-request",
+          "label": "Pedido de reunião",
+          "description": "Reserva de horário só com aprovação; resposta em rascunho",
           "humanReview": "required",
-          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "claraAfter": "A secretária só prepara rascunhos: nenhum email é enviado sem uma pessoa.",
           "events": [
             {
               "type": "system",
               "step": "trigger",
-              "text": "Pedido sintético recebido com consentimento"
+              "text": "Email fictício na caixa de entrada"
             },
             {
-              "type": "patient",
+              "type": "customer",
               "step": "interpret",
-              "text": "Prepare um próximo passo, por favor."
+              "text": "Podemos marcar uma reunião para rever a proposta?"
             },
             {
               "type": "agent",
-              "step": "interpret",
-              "text": "Preparei um rascunho para revisão da equipa."
+              "step": "act",
+              "text": "Email etiquetado como reunião e horário livre encontrado.",
+              "tool": "mail.label"
             },
             {
               "type": "system",
               "step": "human",
-              "text": "Aprovação obrigatória antes de qualquer envio",
-              "tool": "team.handoff"
+              "text": "Reserva do horário aguarda aprovação",
+              "tool": "calendar.hold",
+              "guardrail": "human-approval"
             },
             {
-              "type": "system",
+              "type": "agent",
               "step": "done",
-              "text": "Rascunho e tarefa humana registados; nenhum envio"
+              "text": "Rascunho de resposta com o horário criado",
+              "tool": "mail.draft_reply"
             }
           ],
           "expect": {
-            "handoff": true
+            "status": "completed",
+            "handoff": false
           }
         },
         {
-          "id": "sensitive",
-          "label": "Pedido de envio sem aprovação",
-          "description": "Dados fictícios; nenhuma ação externa",
+          "id": "finance-email",
+          "label": "Email financeiro",
+          "description": "Faturas vão sempre para uma pessoa",
           "humanReview": "required",
-          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "claraAfter": "Temas financeiros são encaminhados à equipa com um resumo.",
           "events": [
             {
               "type": "system",
               "step": "trigger",
-              "text": "Pedido sintético recebido com consentimento"
+              "text": "Email fictício na caixa de entrada"
             },
             {
-              "type": "patient",
+              "type": "customer",
               "step": "interpret",
-              "text": "Prepare um próximo passo, por favor."
+              "text": "Segue a fatura de setembro."
             },
             {
               "type": "agent",
-              "step": "interpret",
-              "text": "Preparei um rascunho para revisão da equipa."
+              "step": "act",
+              "text": "Etiquetado como finanças e resumo criado.",
+              "tool": "brief.create"
             },
             {
-              "type": "system",
+              "type": "staff",
               "step": "human",
-              "text": "Aprovação obrigatória antes de qualquer envio",
+              "text": "Equipa financeira recebe a tarefa",
               "tool": "team.handoff"
             },
             {
               "type": "system",
               "step": "done",
-              "text": "Rascunho e tarefa humana registados; nenhum envio"
+              "text": "Nenhuma resposta automática"
             }
           ],
           "expect": {
@@ -566,20 +620,1131 @@
       "source": "packs/clinic-appointment-confirmation"
     },
     {
-      "id": "PACK-002",
-      "slug": "sales-assistant",
+      "id": "PACK-005",
+      "slug": "ecommerce-assistant",
       "version": "0.1.0",
       "status": "demo",
+      "name": "Assistente E-commerce",
+      "summary": "Colaborador digital gerido pela AtlasHub: estado da encomenda, pedido de reembolso. Demonstração com dados fictícios; funcional em staging com sistemas sandbox.",
+      "locale": "pt-PT",
+      "segments": [
+        "comercio"
+      ],
+      "equation": [
+        "custos",
+        "velocidade"
+      ],
+      "channels": [
+        "webchat",
+        "whatsapp",
+        "email"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Pedido",
+          "description": "Entrada assinada pelo canal do cliente"
+        },
+        {
+          "id": "interpret",
+          "label": "Interpretar",
+          "description": "Intenção por regras (pt/en/es); IA opcional só quando as regras não reconhecem"
+        },
+        {
+          "id": "act",
+          "label": "Executar",
+          "description": "Ferramentas autorizadas no sistema do cliente"
+        },
+        {
+          "id": "human",
+          "label": "Supervisão humana",
+          "description": "Aprovação ou passagem para uma pessoa"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Resultado auditado e medido"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "verify-identity",
+          "rule": "Nenhum dado de encomenda antes de verificar número + email.",
+          "action": "block"
+        },
+        {
+          "id": "human-approval",
+          "rule": "Reembolsos só com aprovação humana; o assistente nunca movimenta dinheiro.",
+          "action": "handoff"
+        },
+        {
+          "id": "forbidden-tools",
+          "rule": "Ações proibidas a este colaborador: payment.refund_execute.",
+          "action": "block"
+        }
+      ],
+      "integrations": [
+        {
+          "id": "store",
+          "kind": "ecommerce",
+          "required": true,
+          "description": "Loja / ERP (encomendas, devoluções)"
+        },
+        {
+          "id": "faq",
+          "kind": "knowledge",
+          "required": true,
+          "description": "Políticas de envio e devolução"
+        }
+      ],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "volume_per_month",
+            "label": "Pedidos por mês",
+            "unit": "",
+            "default": 300,
+            "min": 0,
+            "max": 100000,
+            "step": 10
+          },
+          {
+            "key": "minutes_per_task",
+            "label": "Minutos por pedido hoje",
+            "unit": "min",
+            "default": 6,
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "key": "automatable_pct",
+            "label": "Pedidos tratados sem intervenção",
+            "unit": "%",
+            "default": 60,
+            "min": 0,
+            "max": 100,
+            "step": 5
+          }
+        ],
+        "outputs": [
+          {
+            "key": "hours_saved",
+            "label": "Horas de equipa libertadas por mês",
+            "unit": "h",
+            "formula": "round(volume_per_month * minutes_per_task * automatable_pct / 100 / 60)"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números indicados. Não é uma previsão nem um resultado garantido."
+      },
+      "clara": {
+        "intro": [
+          "Sou a Clara. A AtlasHub opera e supervisiona o Assistente E-commerce como serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma ação real é executada."
+        ],
+        "allDone": "Solicite um assessment para definir âmbito, integrações e limites. Este colaborador está em demonstração, ainda não em piloto.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "comercio"
+          },
+          {
+            "label": "Ações com aprovação",
+            "value": "refund.request"
+          }
+        ]
+      },
+      "labels": {
+        "header": "Loja Fictícia · Demo",
+        "agent": "ASSISTENTE E-COMMERCE · DEMO",
+        "customer": "PESSOA FICTÍCIA"
+      },
+      "scenarios": [
+        {
+          "id": "order-status",
+          "label": "Estado da encomenda",
+          "description": "Dados só depois de verificar encomenda + email",
+          "humanReview": "skip",
+          "claraAfter": "Sem verificação, o assistente não revela nenhum dado da encomenda.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Mensagem fictícia"
+            },
+            {
+              "type": "customer",
+              "step": "interpret",
+              "text": "Onde está a minha encomenda?"
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Identidade verificada com número e email.",
+              "tool": "order.lookup",
+              "guardrail": "verify-identity"
+            },
+            {
+              "type": "agent",
+              "step": "done",
+              "text": "Estado comunicado: enviada"
+            }
+          ],
+          "expect": {
+            "status": "completed",
+            "handoff": false
+          }
+        },
+        {
+          "id": "refund",
+          "label": "Pedido de reembolso",
+          "description": "Reembolso sempre aprovado por uma pessoa",
+          "humanReview": "required",
+          "claraAfter": "O assistente nunca movimenta dinheiro: regista o pedido para a equipa financeira.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Mensagem fictícia"
+            },
+            {
+              "type": "customer",
+              "step": "interpret",
+              "text": "Quero o reembolso."
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Encomenda verificada.",
+              "tool": "order.lookup"
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Reembolso aguarda aprovação",
+              "tool": "refund.request",
+              "guardrail": "human-approval"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Aprovado e passado à equipa financeira"
+            }
+          ],
+          "expect": {
+            "status": "completed",
+            "handoff": false
+          }
+        }
+      ],
+      "source": "packs/ecommerce-assistant"
+    },
+    {
+      "id": "PACK-007",
+      "slug": "finance-assistant",
+      "version": "0.1.0",
+      "status": "demo",
+      "name": "Assistente Financeiro Administrativo",
+      "summary": "Colaborador digital gerido pela AtlasHub: fatura e conciliação, pedido de transferência. Demonstração com dados fictícios; funcional em staging com sistemas sandbox.",
+      "locale": "pt-PT",
+      "segments": [
+        "contabilidade",
+        "transversal"
+      ],
+      "equation": [
+        "custos",
+        "controlo"
+      ],
+      "channels": [
+        "email",
+        "interno"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Pedido",
+          "description": "Entrada assinada pelo canal do cliente"
+        },
+        {
+          "id": "interpret",
+          "label": "Interpretar",
+          "description": "Intenção por regras (pt/en/es); IA opcional só quando as regras não reconhecem"
+        },
+        {
+          "id": "act",
+          "label": "Executar",
+          "description": "Ferramentas autorizadas no sistema do cliente"
+        },
+        {
+          "id": "human",
+          "label": "Supervisão humana",
+          "description": "Aprovação ou passagem para uma pessoa"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Resultado auditado e medido"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "no-money-movement",
+          "rule": "Transferências e pagamentos são proibidos ao assistente.",
+          "action": "block"
+        },
+        {
+          "id": "no-duplicates",
+          "rule": "Faturas duplicadas não são registadas.",
+          "action": "block"
+        },
+        {
+          "id": "human-approval",
+          "rule": "Lembretes de cobrança só com aprovação; conciliações são propostas.",
+          "action": "handoff"
+        },
+        {
+          "id": "forbidden-tools",
+          "rule": "Ações proibidas a este colaborador: payment.transfer.",
+          "action": "block"
+        }
+      ],
+      "integrations": [
+        {
+          "id": "erp",
+          "kind": "erp",
+          "required": true,
+          "description": "ERP / registo de faturas"
+        },
+        {
+          "id": "bank",
+          "kind": "bank_feed",
+          "required": true,
+          "description": "Extrato bancário (só leitura)"
+        },
+        {
+          "id": "email",
+          "kind": "email",
+          "required": false,
+          "description": "Envio de lembretes aprovados"
+        }
+      ],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "volume_per_month",
+            "label": "Pedidos por mês",
+            "unit": "",
+            "default": 300,
+            "min": 0,
+            "max": 100000,
+            "step": 10
+          },
+          {
+            "key": "minutes_per_task",
+            "label": "Minutos por pedido hoje",
+            "unit": "min",
+            "default": 6,
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "key": "automatable_pct",
+            "label": "Pedidos tratados sem intervenção",
+            "unit": "%",
+            "default": 60,
+            "min": 0,
+            "max": 100,
+            "step": 5
+          }
+        ],
+        "outputs": [
+          {
+            "key": "hours_saved",
+            "label": "Horas de equipa libertadas por mês",
+            "unit": "h",
+            "formula": "round(volume_per_month * minutes_per_task * automatable_pct / 100 / 60)"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números indicados. Não é uma previsão nem um resultado garantido."
+      },
+      "clara": {
+        "intro": [
+          "Sou a Clara. A AtlasHub opera e supervisiona o Assistente Financeiro Administrativo como serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma ação real é executada."
+        ],
+        "allDone": "Solicite um assessment para definir âmbito, integrações e limites. Este colaborador está em demonstração, ainda não em piloto.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "contabilidade, transversal"
+          },
+          {
+            "label": "Ações com aprovação",
+            "value": "reminder.send"
+          }
+        ]
+      },
+      "labels": {
+        "header": "PME Fictícia · Demo",
+        "agent": "ASSISTENTE FINANCEIRO ADMINISTRATIVO · DEMO",
+        "customer": "PESSOA FICTÍCIA"
+      },
+      "scenarios": [
+        {
+          "id": "register-reconcile",
+          "label": "Fatura e conciliação",
+          "description": "Registo sem duplicados; conciliação só proposta",
+          "humanReview": "optional",
+          "claraAfter": "O assistente propõe conciliações; uma pessoa confirma antes de mexer nas contas.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Fatura fictícia recebida"
+            },
+            {
+              "type": "staff",
+              "step": "interpret",
+              "text": "Regista esta fatura e concilia com o extrato."
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Fatura registada (sem duplicado).",
+              "tool": "invoice.register",
+              "guardrail": "no-duplicates"
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Movimento correspondente encontrado.",
+              "tool": "reconcile.match"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Conciliação proposta para confirmação"
+            }
+          ],
+          "expect": {
+            "status": "completed",
+            "handoff": false
+          }
+        },
+        {
+          "id": "transfer-blocked",
+          "label": "Pedido de transferência",
+          "description": "Movimentar dinheiro está proibido",
+          "humanReview": "required",
+          "claraAfter": "Pagamentos e transferências são sempre feitos por pessoas.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Pedido fictício"
+            },
+            {
+              "type": "staff",
+              "step": "interpret",
+              "text": "Transfere já o pagamento ao fornecedor."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Pedido bloqueado e registado para a equipa",
+              "tool": "team.handoff",
+              "guardrail": "no-money-movement"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Nenhum pagamento executado"
+            }
+          ],
+          "expect": {
+            "handoff": true
+          }
+        }
+      ],
+      "source": "packs/finance-assistant"
+    },
+    {
+      "id": "PACK-008",
+      "slug": "hr-assistant",
+      "version": "0.1.0",
+      "status": "demo",
+      "name": "Assistente de RH",
+      "summary": "Colaborador digital gerido pela AtlasHub: candidatura, pedido de ranking. Demonstração com dados fictícios; funcional em staging com sistemas sandbox.",
+      "locale": "pt-PT",
+      "segments": [
+        "transversal"
+      ],
+      "equation": [
+        "custos",
+        "velocidade"
+      ],
+      "channels": [
+        "email",
+        "webchat"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Pedido",
+          "description": "Entrada assinada pelo canal do cliente"
+        },
+        {
+          "id": "interpret",
+          "label": "Interpretar",
+          "description": "Intenção por regras (pt/en/es); IA opcional só quando as regras não reconhecem"
+        },
+        {
+          "id": "act",
+          "label": "Executar",
+          "description": "Ferramentas autorizadas no sistema do cliente"
+        },
+        {
+          "id": "human",
+          "label": "Supervisão humana",
+          "description": "Aprovação ou passagem para uma pessoa"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Resultado auditado e medido"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "no-automated-decisions",
+          "rule": "Nunca classificar, pontuar, rejeitar ou contratar candidatos.",
+          "action": "block"
+        },
+        {
+          "id": "no-sensitive-data",
+          "rule": "Atributos sensíveis (idade, género, origem, religião, saúde…) são descartados.",
+          "action": "block"
+        },
+        {
+          "id": "human-approval",
+          "rule": "Entrevistas só com aprovação humana.",
+          "action": "handoff"
+        },
+        {
+          "id": "forbidden-tools",
+          "rule": "Ações proibidas a este colaborador: candidate.rank.",
+          "action": "block"
+        }
+      ],
+      "integrations": [
+        {
+          "id": "ats",
+          "kind": "ats",
+          "required": true,
+          "description": "Sistema de recrutamento"
+        },
+        {
+          "id": "calendar",
+          "kind": "calendar",
+          "required": true,
+          "description": "Agenda de entrevistas"
+        }
+      ],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "volume_per_month",
+            "label": "Pedidos por mês",
+            "unit": "",
+            "default": 300,
+            "min": 0,
+            "max": 100000,
+            "step": 10
+          },
+          {
+            "key": "minutes_per_task",
+            "label": "Minutos por pedido hoje",
+            "unit": "min",
+            "default": 6,
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "key": "automatable_pct",
+            "label": "Pedidos tratados sem intervenção",
+            "unit": "%",
+            "default": 60,
+            "min": 0,
+            "max": 100,
+            "step": 5
+          }
+        ],
+        "outputs": [
+          {
+            "key": "hours_saved",
+            "label": "Horas de equipa libertadas por mês",
+            "unit": "h",
+            "formula": "round(volume_per_month * minutes_per_task * automatable_pct / 100 / 60)"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números indicados. Não é uma previsão nem um resultado garantido."
+      },
+      "clara": {
+        "intro": [
+          "Sou a Clara. A AtlasHub opera e supervisiona o Assistente de RH como serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma ação real é executada."
+        ],
+        "allDone": "Solicite um assessment para definir âmbito, integrações e limites. Este colaborador está em demonstração, ainda não em piloto.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "transversal"
+          },
+          {
+            "label": "Ações com aprovação",
+            "value": "interview.schedule"
+          }
+        ]
+      },
+      "labels": {
+        "header": "Empresa Fictícia · Demo",
+        "agent": "ASSISTENTE DE RH · DEMO",
+        "customer": "PESSOA FICTÍCIA"
+      },
+      "scenarios": [
+        {
+          "id": "application",
+          "label": "Candidatura",
+          "description": "Atributos sensíveis descartados à entrada",
+          "humanReview": "skip",
+          "claraAfter": "Idade, género, nacionalidade e outros atributos sensíveis nunca são guardados.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Candidatura fictícia com consentimento"
+            },
+            {
+              "type": "customer",
+              "step": "interpret",
+              "text": "Quero candidatar-me à vaga de rececionista."
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Candidatura registada sem atributos sensíveis.",
+              "tool": "application.register",
+              "guardrail": "no-sensitive-data"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Candidato informado das etapas"
+            }
+          ],
+          "expect": {
+            "status": "completed",
+            "handoff": false
+          }
+        },
+        {
+          "id": "ranking-blocked",
+          "label": "Pedido de ranking",
+          "description": "Decisões sobre pessoas são sempre humanas",
+          "humanReview": "required",
+          "claraAfter": "O assistente nunca classifica, rejeita ou contrata candidatos.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Pedido interno fictício"
+            },
+            {
+              "type": "staff",
+              "step": "interpret",
+              "text": "Faz o ranking dos melhores candidatos."
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Pedido recusado e encaminhado à equipa",
+              "tool": "team.handoff",
+              "guardrail": "no-automated-decisions"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Nenhuma decisão automática"
+            }
+          ],
+          "expect": {
+            "handoff": true
+          }
+        }
+      ],
+      "source": "packs/hr-assistant"
+    },
+    {
+      "id": "PACK-006",
+      "slug": "marketing-assistant",
+      "version": "0.1.0",
+      "status": "demo",
+      "name": "Assistente de Marketing",
+      "summary": "Colaborador digital gerido pela AtlasHub: rascunho de publicação. Demonstração com dados fictícios; funcional em staging com sistemas sandbox.",
+      "locale": "pt-PT",
+      "segments": [
+        "transversal"
+      ],
+      "equation": [
+        "receita",
+        "velocidade"
+      ],
+      "channels": [
+        "interno"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Pedido",
+          "description": "Entrada assinada pelo canal do cliente"
+        },
+        {
+          "id": "interpret",
+          "label": "Interpretar",
+          "description": "Intenção por regras (pt/en/es); IA opcional só quando as regras não reconhecem"
+        },
+        {
+          "id": "act",
+          "label": "Executar",
+          "description": "Ferramentas autorizadas no sistema do cliente"
+        },
+        {
+          "id": "human",
+          "label": "Supervisão humana",
+          "description": "Aprovação ou passagem para uma pessoa"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Resultado auditado e medido"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "licensed-sources",
+          "rule": "Usar só fontes aprovadas e licenciadas.",
+          "action": "block"
+        },
+        {
+          "id": "human-approval",
+          "rule": "Nada é publicado ou agendado sem aprovação humana; publicar diretamente está proibido.",
+          "action": "handoff"
+        },
+        {
+          "id": "forbidden-tools",
+          "rule": "Ações proibidas a este colaborador: post.publish.",
+          "action": "block"
+        }
+      ],
+      "integrations": [
+        {
+          "id": "sources",
+          "kind": "rss",
+          "required": true,
+          "description": "Fontes aprovadas e licenciadas"
+        },
+        {
+          "id": "social",
+          "kind": "social",
+          "required": false,
+          "description": "Agendamento em redes sociais"
+        },
+        {
+          "id": "analytics",
+          "kind": "analytics",
+          "required": false,
+          "description": "Métricas de publicação"
+        }
+      ],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "volume_per_month",
+            "label": "Pedidos por mês",
+            "unit": "",
+            "default": 300,
+            "min": 0,
+            "max": 100000,
+            "step": 10
+          },
+          {
+            "key": "minutes_per_task",
+            "label": "Minutos por pedido hoje",
+            "unit": "min",
+            "default": 6,
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "key": "automatable_pct",
+            "label": "Pedidos tratados sem intervenção",
+            "unit": "%",
+            "default": 60,
+            "min": 0,
+            "max": 100,
+            "step": 5
+          }
+        ],
+        "outputs": [
+          {
+            "key": "hours_saved",
+            "label": "Horas de equipa libertadas por mês",
+            "unit": "h",
+            "formula": "round(volume_per_month * minutes_per_task * automatable_pct / 100 / 60)"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números indicados. Não é uma previsão nem um resultado garantido."
+      },
+      "clara": {
+        "intro": [
+          "Sou a Clara. A AtlasHub opera e supervisiona o Assistente de Marketing como serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma ação real é executada."
+        ],
+        "allDone": "Solicite um assessment para definir âmbito, integrações e limites. Este colaborador está em demonstração, ainda não em piloto.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "transversal"
+          },
+          {
+            "label": "Ações com aprovação",
+            "value": "post.schedule"
+          }
+        ]
+      },
+      "labels": {
+        "header": "Marca Fictícia · Demo",
+        "agent": "ASSISTENTE DE MARKETING · DEMO",
+        "customer": "PESSOA FICTÍCIA"
+      },
+      "scenarios": [
+        {
+          "id": "draft-post",
+          "label": "Rascunho de publicação",
+          "description": "Fontes licenciadas; publicação só com aprovação",
+          "humanReview": "required",
+          "claraAfter": "Nada é publicado sem aprovação; só se usam fontes licenciadas.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Pedido interno fictício"
+            },
+            {
+              "type": "staff",
+              "step": "interpret",
+              "text": "Cria um post sobre automação para o LinkedIn."
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "1 fonte licenciada selecionada.",
+              "tool": "research.collect",
+              "guardrail": "licensed-sources"
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Rascunho criado.",
+              "tool": "post.draft"
+            },
+            {
+              "type": "system",
+              "step": "human",
+              "text": "Agendamento aguarda aprovação",
+              "tool": "post.schedule",
+              "guardrail": "human-approval"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Publicação agendada após aprovação"
+            }
+          ],
+          "expect": {
+            "status": "completed",
+            "handoff": false
+          }
+        }
+      ],
+      "source": "packs/marketing-assistant"
+    },
+    {
+      "id": "PACK-004",
+      "slug": "real-estate-consultant",
+      "version": "0.1.0",
+      "status": "demo",
+      "name": "Consultor Imobiliário Digital",
+      "summary": "Colaborador digital gerido pela AtlasHub: procura de imóvel, negociação de preço. Demonstração com dados fictícios; funcional em staging com sistemas sandbox.",
+      "locale": "pt-PT",
+      "segments": [
+        "imobiliario"
+      ],
+      "equation": [
+        "receita",
+        "velocidade"
+      ],
+      "channels": [
+        "whatsapp",
+        "webchat",
+        "email"
+      ],
+      "commercial": {
+        "cloud": true,
+        "onsite": true
+      },
+      "steps": [
+        {
+          "id": "trigger",
+          "label": "Pedido",
+          "description": "Entrada assinada pelo canal do cliente"
+        },
+        {
+          "id": "interpret",
+          "label": "Interpretar",
+          "description": "Intenção por regras (pt/en/es); IA opcional só quando as regras não reconhecem"
+        },
+        {
+          "id": "act",
+          "label": "Executar",
+          "description": "Ferramentas autorizadas no sistema do cliente"
+        },
+        {
+          "id": "human",
+          "label": "Supervisão humana",
+          "description": "Aprovação ou passagem para uma pessoa"
+        },
+        {
+          "id": "done",
+          "label": "Concluir",
+          "description": "Resultado auditado e medido"
+        }
+      ],
+      "guardrails": [
+        {
+          "id": "no-invention",
+          "rule": "Responder só com imóveis, preços e disponibilidade da carteira; nunca inventar.",
+          "action": "block"
+        },
+        {
+          "id": "no-offers",
+          "rule": "Propostas, descontos e negociação de preço são sempre humanos.",
+          "action": "handoff"
+        },
+        {
+          "id": "human-approval",
+          "rule": "Visitas só com aprovação humana.",
+          "action": "handoff"
+        },
+        {
+          "id": "forbidden-tools",
+          "rule": "Ações proibidas a este colaborador: offer.submit.",
+          "action": "block"
+        }
+      ],
+      "integrations": [
+        {
+          "id": "listings",
+          "kind": "database",
+          "required": true,
+          "description": "Carteira de imóveis da agência"
+        },
+        {
+          "id": "calendar",
+          "kind": "calendar",
+          "required": true,
+          "description": "Agenda de visitas"
+        },
+        {
+          "id": "crm",
+          "kind": "crm",
+          "required": false,
+          "description": "Registo de leads"
+        }
+      ],
+      "metrics": {
+        "inputs": [
+          {
+            "key": "volume_per_month",
+            "label": "Pedidos por mês",
+            "unit": "",
+            "default": 300,
+            "min": 0,
+            "max": 100000,
+            "step": 10
+          },
+          {
+            "key": "minutes_per_task",
+            "label": "Minutos por pedido hoje",
+            "unit": "min",
+            "default": 6,
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "key": "automatable_pct",
+            "label": "Pedidos tratados sem intervenção",
+            "unit": "%",
+            "default": 60,
+            "min": 0,
+            "max": 100,
+            "step": 5
+          }
+        ],
+        "outputs": [
+          {
+            "key": "hours_saved",
+            "label": "Horas de equipa libertadas por mês",
+            "unit": "h",
+            "formula": "round(volume_per_month * minutes_per_task * automatable_pct / 100 / 60)"
+          }
+        ],
+        "disclaimer": "Hipótese calculada com os números indicados. Não é uma previsão nem um resultado garantido."
+      },
+      "clara": {
+        "intro": [
+          "Sou a Clara. A AtlasHub opera e supervisiona o Consultor Imobiliário Digital como serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma ação real é executada."
+        ],
+        "allDone": "Solicite um assessment para definir âmbito, integrações e limites. Este colaborador está em demonstração, ainda não em piloto.",
+        "context": [
+          {
+            "label": "Segmento",
+            "value": "imobiliario"
+          },
+          {
+            "label": "Ações com aprovação",
+            "value": "visit.schedule"
+          }
+        ]
+      },
+      "labels": {
+        "header": "Imobiliária Fictícia · Demo",
+        "agent": "CONSULTOR IMOBILIÁRIO DIGITAL · DEMO",
+        "customer": "PESSOA FICTÍCIA"
+      },
+      "scenarios": [
+        {
+          "id": "search",
+          "label": "Procura de imóvel",
+          "description": "Só imóveis reais e disponíveis da carteira",
+          "humanReview": "skip",
+          "claraAfter": "O consultor nunca inventa imóveis, preços ou disponibilidade.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Mensagem fictícia com consentimento"
+            },
+            {
+              "type": "customer",
+              "step": "interpret",
+              "text": "Procuro um T2 em Lisboa até 400 mil euros."
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Encontrei 1 imóvel disponível que cumpre os critérios.",
+              "tool": "property.search",
+              "guardrail": "no-invention"
+            },
+            {
+              "type": "agent",
+              "step": "done",
+              "text": "Lead registado com os critérios",
+              "tool": "lead.capture"
+            }
+          ],
+          "expect": {
+            "status": "completed",
+            "handoff": false
+          }
+        },
+        {
+          "id": "negotiation",
+          "label": "Negociação de preço",
+          "description": "Ofertas e descontos são sempre humanos",
+          "humanReview": "required",
+          "claraAfter": "Preço e propostas são decididos por pessoas da agência.",
+          "events": [
+            {
+              "type": "system",
+              "step": "trigger",
+              "text": "Mensagem fictícia"
+            },
+            {
+              "type": "customer",
+              "step": "interpret",
+              "text": "Aceitam uma contraproposta com desconto?"
+            },
+            {
+              "type": "staff",
+              "step": "human",
+              "text": "Encaminhado a um consultor humano",
+              "tool": "team.handoff",
+              "guardrail": "no-offers"
+            },
+            {
+              "type": "system",
+              "step": "done",
+              "text": "Nenhuma oferta feita pelo assistente"
+            }
+          ],
+          "expect": {
+            "handoff": true
+          }
+        }
+      ],
+      "source": "packs/real-estate-consultant"
+    },
+    {
+      "id": "PACK-002",
+      "slug": "sales-assistant",
+      "version": "0.2.0",
+      "status": "demo",
       "name": "Assistente Comercial",
-      "summary": "Demonstração com dados fictícios: qualificação de lead e proposta de próximo passo. Serviço gerido pela AtlasHub; sem integração ativa.",
-      "locale": "pt-BR",
+      "summary": "Colaborador digital gerido pela AtlasHub: lead qualificado, pedido de remoção. Demonstração com dados fictícios; funcional em staging com sistemas sandbox.",
+      "locale": "pt-PT",
       "segments": [
         "servicos"
       ],
       "equation": [
-        "custos"
+        "receita",
+        "velocidade"
       ],
       "channels": [
+        "email",
+        "webchat",
         "whatsapp"
       ],
       "commercial": {
@@ -590,22 +1755,27 @@
         {
           "id": "trigger",
           "label": "Pedido",
-          "description": "Pedido fictício com consentimento"
+          "description": "Entrada assinada pelo canal do cliente"
         },
         {
           "id": "interpret",
-          "label": "Preparar",
-          "description": "qualificação de lead e proposta de próximo passo"
+          "label": "Interpretar",
+          "description": "Intenção por regras (pt/en/es); IA opcional só quando as regras não reconhecem"
+        },
+        {
+          "id": "act",
+          "label": "Executar",
+          "description": "Ferramentas autorizadas no sistema do cliente"
         },
         {
           "id": "human",
-          "label": "Aprovação humana",
-          "description": "Nenhum envio sem aprovação"
+          "label": "Supervisão humana",
+          "description": "Aprovação ou passagem para uma pessoa"
         },
         {
           "id": "done",
           "label": "Concluir",
-          "description": "Rascunho entregue à equipa"
+          "description": "Resultado auditado e medido"
         }
       ],
       "guardrails": [
@@ -616,129 +1786,173 @@
         },
         {
           "id": "consent",
-          "rule": "Nenhuma comunicação sem consentimento registado.",
+          "rule": "Nenhuma comunicação sem consentimento registado; pedidos de remoção são imediatos e definitivos.",
           "action": "block"
         }
       ],
-      "integrations": [],
+      "integrations": [
+        {
+          "id": "crm",
+          "kind": "crm",
+          "required": true,
+          "description": "CRM do cliente (leads, atividades, supressões)"
+        },
+        {
+          "id": "calendar",
+          "kind": "calendar",
+          "required": true,
+          "description": "Agenda comercial"
+        },
+        {
+          "id": "email",
+          "kind": "email",
+          "required": false,
+          "description": "Envio de follow-ups aprovados"
+        }
+      ],
       "metrics": {
         "inputs": [
           {
             "key": "volume_per_month",
             "label": "Pedidos por mês",
             "unit": "",
-            "default": 100,
+            "default": 300,
             "min": 0,
             "max": 100000,
             "step": 10
+          },
+          {
+            "key": "minutes_per_task",
+            "label": "Minutos por pedido hoje",
+            "unit": "min",
+            "default": 6,
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "key": "automatable_pct",
+            "label": "Pedidos tratados sem intervenção",
+            "unit": "%",
+            "default": 60,
+            "min": 0,
+            "max": 100,
+            "step": 5
           }
         ],
         "outputs": [
           {
-            "key": "volume",
-            "label": "Pedidos por mês",
-            "formula": "volume_per_month"
+            "key": "hours_saved",
+            "label": "Horas de equipa libertadas por mês",
+            "unit": "h",
+            "formula": "round(volume_per_month * minutes_per_task * automatable_pct / 100 / 60)"
           }
         ],
-        "disclaimer": "Hipótese calculada com os números do lead. Não é uma previsão."
+        "disclaimer": "Hipótese calculada com os números indicados. Não é uma previsão nem um resultado garantido."
       },
       "clara": {
         "intro": [
-          "Sou a Clara. A AtlasHub opera e supervisiona este serviço gerido.",
-          "Demonstração com dados fictícios; nenhuma mensagem é enviada."
+          "Sou a Clara. A AtlasHub opera e supervisiona o Assistente Comercial como serviço gerido.",
+          "Demonstração com dados fictícios; nenhuma ação real é executada."
         ],
-        "allDone": "Solicite um assessment para definir escopo e integrações. Este perfil ainda não é operacional.",
+        "allDone": "Solicite um assessment para definir âmbito, integrações e limites. Este colaborador está em demonstração, ainda não em piloto.",
         "context": [
           {
             "label": "Segmento",
-            "value": "Serviços"
+            "value": "servicos"
           },
           {
-            "label": "Modo",
-            "value": "Demo sem integração ativa"
+            "label": "Ações com aprovação",
+            "value": "calendar.book_meeting, message.send_followup"
           }
         ]
       },
       "labels": {
-        "header": "Empresa Fictícia · Demo",
-        "agent": "ASSISTENTE · DEMO",
-        "customer": "CLIENTE FICTÍCIO"
+        "header": "Agência Fictícia · Demo",
+        "agent": "ASSISTENTE COMERCIAL · DEMO",
+        "customer": "PESSOA FICTÍCIA"
       },
       "scenarios": [
         {
-          "id": "happy-path",
-          "label": "Pedido administrativo",
-          "description": "Dados fictícios; nenhuma ação externa",
+          "id": "qualified-lead",
+          "label": "Lead qualificado",
+          "description": "Proposta preparada; envio só com aprovação",
           "humanReview": "required",
-          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "claraAfter": "O follow-up só sai depois de uma pessoa da equipa aprovar o texto exato.",
           "events": [
             {
               "type": "system",
               "step": "trigger",
-              "text": "Pedido sintético recebido com consentimento"
+              "text": "Pedido fictício com consentimento registado"
             },
             {
-              "type": "patient",
+              "type": "customer",
               "step": "interpret",
-              "text": "Prepare um próximo passo, por favor."
+              "text": "Gostava de receber uma proposta e preço."
             },
             {
               "type": "agent",
-              "step": "interpret",
-              "text": "Preparei um rascunho para revisão da equipa."
+              "step": "act",
+              "text": "Lead registado e qualificado (pontuação 95).",
+              "tool": "crm.upsert_lead"
+            },
+            {
+              "type": "agent",
+              "step": "act",
+              "text": "Rascunho de follow-up preparado.",
+              "tool": "crm.log_activity"
             },
             {
               "type": "system",
               "step": "human",
-              "text": "Aprovação obrigatória antes de qualquer envio",
-              "tool": "team.handoff"
+              "text": "Aguarda aprovação do texto antes do envio",
+              "tool": "message.send_followup",
+              "guardrail": "human-approval"
             },
             {
               "type": "system",
               "step": "done",
-              "text": "Rascunho e tarefa humana registados; nenhum envio"
+              "text": "Aprovado: follow-up enviado uma única vez"
             }
           ],
           "expect": {
-            "handoff": true
+            "status": "completed",
+            "handoff": false
           }
         },
         {
-          "id": "sensitive",
-          "label": "Pedido de envio sem aprovação",
-          "description": "Dados fictícios; nenhuma ação externa",
-          "humanReview": "required",
-          "claraAfter": "O rascunho fica pendente de revisão humana; nenhuma comunicação foi enviada.",
+          "id": "opt-out",
+          "label": "Pedido de remoção",
+          "description": "Supressão imediata, sem mais contactos",
+          "humanReview": "skip",
+          "claraAfter": "O contacto fica suprimido: nenhuma cadência volta a contactá-lo.",
           "events": [
             {
               "type": "system",
               "step": "trigger",
-              "text": "Pedido sintético recebido com consentimento"
+              "text": "Mensagem fictícia recebida"
             },
             {
-              "type": "patient",
+              "type": "customer",
               "step": "interpret",
-              "text": "Prepare um próximo passo, por favor."
+              "text": "Por favor removam o meu contacto."
             },
             {
               "type": "agent",
-              "step": "interpret",
-              "text": "Preparei um rascunho para revisão da equipa."
-            },
-            {
-              "type": "system",
-              "step": "human",
-              "text": "Aprovação obrigatória antes de qualquer envio",
-              "tool": "team.handoff"
+              "step": "act",
+              "text": "Contacto suprimido e atividade registada.",
+              "tool": "crm.suppress",
+              "guardrail": "consent"
             },
             {
               "type": "system",
               "step": "done",
-              "text": "Rascunho e tarefa humana registados; nenhum envio"
+              "text": "Sem contactos futuros"
             }
           ],
           "expect": {
-            "handoff": true
+            "status": "completed",
+            "handoff": false
           }
         }
       ],
