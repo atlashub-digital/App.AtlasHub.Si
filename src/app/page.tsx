@@ -10,11 +10,13 @@ export default function Home() {
           VEJA O AGENTE A TRABALHAR NO SEU NEGÓCIO.
         </h1>
         <p className="mt-5 text-lg text-mute">
-          Escolha um pack, ajuste os números da sua empresa e acompanhe o agente passo a passo. Tudo é simulação com
+          A AtlasHub opera e supervisiona colaboradores digitais como serviço gerido. A Clara ajuda a escolher o escopo; experimente uma demonstração antes do assessment. Tudo é simulação com
           dados fictícios: nada é enviado nem executado.
         </p>
       </section>
 
+      <section aria-label="Catálogo de funções geridas" className="space-y-2"><h2 className="text-2xl font-bold">Colaboradores digitais geridos</h2><p>Rececionista Digital, Assistente Comercial e Secretária Administrativa: demonstração. Consultor Imobiliário, Assistente E-commerce, Marketing, Financeiro Administrativo e RH: planeados. Nenhum perfil é anunciado como operacional antes da homologação.</p></section>
+      <nav className="flex gap-6"><Link href="/assessment">Falar com a Clara · Assessment</Link><Link href="/portal">Portal do cliente</Link></nav>
       <section aria-label="Packs disponíveis" className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {packs.map((pack) => (
           <Link

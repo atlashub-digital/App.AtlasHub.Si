@@ -1,0 +1,3 @@
+export default function Login() {
+  return <main className="mx-auto max-w-lg space-y-6 p-8"><h1 className="text-3xl font-bold">Portal do cliente</h1><p>Consulte a atividade do serviço gerido pela AtlasHub.</p><form action="/api/session" method="post" className="space-y-4"><label className="block">Email<input required name="email" type="email" className="block w-full rounded border p-3 text-black" /></label><label className="block">Palavra-passe<input required name="password" type="password" className="block w-full rounded border p-3 text-black" /></label><button className="rounded border p-3" type="submit">Entrar</button></form><p>O acesso requer uma conta autorizada no Supabase. Dados fictícios em staging.</p></main>;
+}

@@ -5,7 +5,7 @@ import { stepStates, timestamp } from "../src/lib/simulator.ts";
 import { initialState, reducer } from "../src/components/simulator/state.ts";
 import type { Pack } from "../src/lib/types.ts";
 
-const pack = catalog.packs[0] as unknown as Pack;
+const pack = catalog.packs.find((p) => p.id === "PACK-001")! as unknown as Pack;
 const byId = (id: string) => pack.scenarios.find((s) => s.id === id)!;
 
 test("o catálogo é coerente: passos e cenários existem", () => {
