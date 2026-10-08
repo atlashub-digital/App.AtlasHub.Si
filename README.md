@@ -16,15 +16,16 @@ atlashub.si (landing)                     Clara (qualifica o lead)
                               │
               ┌───────────────┼────────────────┐
               ▼               ▼                ▼
-        Catálogo de       Simulador        Próximo passo
-        packs (/)      /simulador/[slug]   Cloud · Presencial
+   Painel (/) · Biblioteca  Simulador        Próximo passo
+   Catálogo (/packs)  /simulador/[slug]   Cloud · Presencial
                        · chat ao vivo      · AI Business Assessment
                        · timeline          · resumo copiável
                        · números do lead
                        · limites do agente
 ```
 
-- **Catálogo** (`/`): lista os packs que estão em `demo`, `pilot` ou `ga`.
+- **Painel** (`/`) e **Biblioteca de Agentes** (`/biblioteca`): maquetes 05 e 04 do Visual Pack V1 reproduzidas 1:1 (fundo + texto real + links), com dados ilustrativos para apresentar a clientes como simulação. Os perfis abrem os simuladores reais. Por baixo do ecrã aparece "Demonstração · dados ilustrativos" (`NEXT_PUBLIC_DEMO_BADGE=off` esconde-o).
+- **Catálogo** (`/packs`): lista os packs que estão em `demo`, `pilot` ou `ga`.
 - **Simulador** (`/simulador/[slug]`): reproduz os cenários do pack (conversa de WhatsApp + percurso da automação + registo de eventos), recalcula o impacto com os números do lead e mostra os limites do agente.
 - **Próximo passo**: Cloud ou presencial, e um botão que abre o WhatsApp da AtlasHub com um resumo da simulação (o lead revê e envia; o app não envia nada).
 
@@ -50,11 +51,17 @@ Porquê uma cópia no repositório e não uma dependência npm? Porque `atlas-ag
 App.AtlasHub.Si/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx                  casca: cabeçalho, metadados, tema
-│   │   ├── page.tsx                    catálogo de packs
-│   │   ├── simulador/[slug]/page.tsx   uma página por pack (estática)
-│   │   └── globals.css                 tokens do design (Tailwind v4 @theme)
+│   │   ├── layout.tsx                  casca: metadados, tema
+│   │   ├── (demo)/page.tsx             painel (maquete 05, 1:1)
+│   │   ├── (demo)/biblioteca/page.tsx  biblioteca de agentes (maquete 04, 1:1)
+│   │   ├── (site)/layout.tsx           cabeçalho das páginas clássicas
+│   │   ├── (site)/packs/page.tsx       catálogo de packs
+│   │   ├── (site)/simulador/[slug]/    uma página por pack (estática)
+│   │   ├── (site)/assessment · login · portal
+│   │   ├── globals.css                 tokens do design (Tailwind v4 @theme)
+│   │   └── mockup.css                  ecrãs 1:1 (fontes Figtree e Barlow Semi Condensed em public/fonts)
 │   ├── components/
+│   │   ├── MockupCanvas.tsx            fundo da maquete + texto real + links, escalado por container queries
 │   │   ├── SiteHeader.tsx
 │   │   └── simulator/
 │   │       ├── Simulator.tsx           composição + efeitos (timer, scroll)
@@ -67,9 +74,10 @@ App.AtlasHub.Si/
 │   │   ├── simulator.ts                lógica pura: estado da timeline, eventos visíveis
 │   │   └── format.ts                   formatação pt-BR (R$, %, h, min)
 │   ├── config/site.ts                  WhatsApp e preços das modalidades
-│   └── data/catalog.json              cópia do catálogo (gerada)
+│   ├── data/catalog.json              cópia do catálogo (gerada)
+│   └── data/mockups/*.json            texto e links dos ecrãs 1:1 (gerados; ver AtlasHub.Si design/visual-pack-v1/fidelity)
 ├── scripts/sync-catalog.mjs            traz o catálogo de atlas-agent-packs
-├── tests/                              metrics.test.ts · simulator.test.ts
+├── tests/                              metrics · simulator · mockups
 └── .github/workflows/ci.yml            testes · lint · typecheck · build
 ```
 
@@ -142,6 +150,7 @@ Nenhum ficheiro de UI muda. Se o pack novo precisar de algo que o simulador aind
 | Variável | Para quê | Omissão |
 |---|---|---|
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Destino do botão "Marcar AI Business Assessment" | `5562991903462` (landing) |
+| `NEXT_PUBLIC_DEMO_BADGE` | `off` esconde "Demonstração · dados ilustrativos" no painel e na biblioteca | visível |
 
 Preços das modalidades: `src/config/site.ts` (`OFFER`). Enquanto forem `null`, o app mostra "Valor definido no AI Business Assessment" e **nunca inventa um valor**. Preencher quando os preços fixos forem aprovados.
 

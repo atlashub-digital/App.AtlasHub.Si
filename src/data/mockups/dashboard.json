@@ -1,0 +1,1326 @@
+{
+"id": "dashboard",
+"title": "Bem-vinda, Ana",
+"W": 1672,
+"H": 941,
+"bg": "/mockups/dashboard.webp",
+"items": [
+{
+"t": "Início",
+"x": 95.0,
+"y": 131.9,
+"s": 15.98,
+"w": 500,
+"f": "figtree",
+"c": "#f4ffff",
+"tag": "span"
+},
+{
+"t": "Meus Agentes",
+"x": 95.0,
+"y": 186.43,
+"s": 16.3,
+"w": 500,
+"f": "figtree",
+"c": "#d6e7ff",
+"tag": "span"
+},
+{
+"t": "Missões",
+"x": 95.0,
+"y": 238.89,
+"s": 16.07,
+"w": 500,
+"f": "figtree",
+"c": "#d9e9ff",
+"tag": "span"
+},
+{
+"t": "Processos",
+"x": 95.0,
+"y": 291.66,
+"s": 15.94,
+"w": 500,
+"f": "figtree",
+"c": "#d7e8ff",
+"tag": "span"
+},
+{
+"t": "Integrações",
+"x": 95.0,
+"y": 342.89,
+"s": 16.04,
+"w": 500,
+"f": "figtree",
+"c": "#d8e8ff",
+"tag": "span"
+},
+{
+"t": "Resultados",
+"x": 95.0,
+"y": 394.46,
+"s": 16.13,
+"w": 500,
+"f": "figtree",
+"c": "#d7e6fe",
+"tag": "span"
+},
+{
+"t": "Equipe",
+"x": 95.0,
+"y": 447.89,
+"s": 16.08,
+"w": 500,
+"f": "figtree",
+"c": "#d7e5ff",
+"tag": "span"
+},
+{
+"t": "Configurações",
+"x": 95.0,
+"y": 499.9,
+"s": 15.99,
+"w": 500,
+"f": "figtree",
+"c": "#d5e7ff",
+"tag": "span"
+},
+{
+"t": "Empresas",
+"x": 57.0,
+"y": 616.14,
+"s": 19.63,
+"w": 500,
+"f": "figtree",
+"c": "#f7fdff"
+},
+{
+"t": "mais humanas.",
+"x": 57.0,
+"y": 639.74,
+"s": 19.63,
+"w": 500,
+"f": "figtree",
+"c": "#f5fdff"
+},
+{
+"t": "Equipas",
+"x": 57.0,
+"y": 664.24,
+"s": 19.63,
+"w": 500,
+"f": "figtree",
+"c": "#eef5ff"
+},
+{
+"t": "{mais capazes.}",
+"x": 57.0,
+"y": 689.47,
+"s": 19.63,
+"w": 500,
+"f": "figtree",
+"c": "#4fdeff",
+"a": "#2bd3f3"
+},
+{
+"t": "Buscar agentes, processos, missões ou integrações...",
+"x": 361.0,
+"y": 30.28,
+"s": 13.48,
+"w": 400,
+"f": "figtree",
+"c": "#99b0d2",
+"tag": "span"
+},
+{
+"t": "Ana Silva",
+"x": 1478.0,
+"y": 21.54,
+"s": 13.4,
+"w": 600,
+"f": "figtree",
+"c": "#f9ffff",
+"tag": "span"
+},
+{
+"t": "Empresa Exemplo",
+"x": 1479.0,
+"y": 40.47,
+"s": 11.51,
+"w": 400,
+"f": "figtree",
+"c": "#b2c2e0",
+"tag": "span"
+},
+{
+"t": "Bem-vinda, Ana",
+"x": 323.0,
+"y": 84.64,
+"s": 37.41,
+"w": 700,
+"f": "figtree",
+"c": "#feffff",
+"tag": "span"
+},
+{
+"t": "Aqui está o estado da sua equipa aumentada.",
+"x": 322.0,
+"y": 131.6,
+"s": 17.16,
+"w": 400,
+"f": "figtree",
+"c": "#d0e3ff"
+},
+{
+"t": "Últimos 30 dias",
+"x": 1092.0,
+"y": 111.49,
+"s": 13.24,
+"w": 500,
+"f": "figtree",
+"c": "#f5fcff",
+"tag": "span"
+},
+{
+"t": "Agentes em operação",
+"x": 395.0,
+"y": 189.62,
+"s": 12.54,
+"w": 500,
+"f": "figtree",
+"c": "#dfefff",
+"tag": "span"
+},
+{
+"t": "5",
+"x": 396.0,
+"y": 214.35,
+"s": 25.86,
+"w": 700,
+"f": "figtree",
+"c": "#fdffff",
+"tag": "span"
+},
+{
+"t": "+1 este mês",
+"x": 410.0,
+"y": 254.71,
+"s": 11.61,
+"w": 500,
+"f": "figtree",
+"c": "#89ebb5",
+"tag": "span"
+},
+{
+"t": "Tarefas executadas",
+"x": 642.0,
+"y": 188.01,
+"s": 14.91,
+"w": 500,
+"f": "figtree",
+"c": "#deecff",
+"tag": "span"
+},
+{
+"t": "12.480",
+"x": 643.0,
+"y": 214.61,
+"s": 25.8,
+"w": 700,
+"f": "figtree",
+"c": "#ffffff",
+"tag": "span"
+},
+{
+"t": "+24%",
+"x": 651.0,
+"y": 254.06,
+"s": 13.79,
+"w": 500,
+"f": "figtree",
+"c": "#81e9b4",
+"tag": "span"
+},
+{
+"t": "Tempo poupado",
+"x": 889.0,
+"y": 189.21,
+"s": 12.96,
+"w": 500,
+"f": "figtree",
+"c": "#d4e5ff",
+"tag": "span"
+},
+{
+"t": "320h",
+"x": 890.0,
+"y": 214.49,
+"s": 26.38,
+"w": 700,
+"f": "figtree",
+"c": "#feffff",
+"tag": "span"
+},
+{
+"t": "+27%",
+"x": 898.0,
+"y": 254.16,
+"s": 14.62,
+"w": 500,
+"f": "figtree",
+"c": "#7fe9b7",
+"tag": "span"
+},
+{
+"t": "Satisfação",
+"x": 1119.0,
+"y": 189.63,
+"s": 12.45,
+"w": 500,
+"f": "figtree",
+"c": "#d3e1ff",
+"tag": "span"
+},
+{
+"t": "96%",
+"x": 1119.0,
+"y": 215.31,
+"s": 26.9,
+"w": 700,
+"f": "figtree",
+"c": "#fdffff",
+"tag": "span"
+},
+{
+"t": "+4%",
+"x": 1127.0,
+"y": 253.97,
+"s": 14.71,
+"w": 500,
+"f": "figtree",
+"c": "#7cecae",
+"tag": "span"
+},
+{
+"t": "Mais capacidade",
+"x": 1281.0,
+"y": 151.57,
+"s": 20.52,
+"w": 700,
+"f": "figtree",
+"c": "#faffff"
+},
+{
+"t": "para {o seu negócio.}",
+"x": 1281.0,
+"y": 176.57,
+"s": 20.52,
+"w": 700,
+"f": "figtree",
+"c": "#eafeff",
+"a": "#2fc8f2"
+},
+{
+"t": "O futuro do trabalho",
+"x": 1280.0,
+"y": 214.03,
+"s": 15.82,
+"w": 400,
+"f": "figtree",
+"c": "#c6ecff"
+},
+{
+"t": "já começou.",
+"x": 1280.99,
+"y": 233.74,
+"s": 15.82,
+"w": 400,
+"f": "figtree",
+"c": "#c6eeff"
+},
+{
+"t": "Equipa de Agentes",
+"x": 341.0,
+"y": 308.98,
+"s": 19.63,
+"w": 700,
+"f": "figtree",
+"c": "#fdffff",
+"tag": "h2"
+},
+{
+"t": "Os seus agentes digitais em operação.",
+"x": 340.0,
+"y": 334.35,
+"s": 13.96,
+"w": 400,
+"f": "figtree",
+"c": "#dae8ff"
+},
+{
+"t": "Ver todos",
+"x": 1547.0,
+"y": 322.04,
+"s": 13.41,
+"w": 500,
+"f": "figtree",
+"c": "#48b6f0",
+"tag": "span"
+},
+{
+"t": "Clara",
+"x": 461.0,
+"y": 381.96,
+"s": 14.77,
+"w": 600,
+"f": "figtree",
+"c": "#fcffff",
+"tag": "h3"
+},
+{
+"t": "Online",
+"x": 479.0,
+"y": 408.55,
+"s": 11.99,
+"w": 500,
+"f": "figtree",
+"c": "#7addaf",
+"tag": "span"
+},
+{
+"t": "Atendimento ao Cliente",
+"x": 461.0,
+"y": 436.64,
+"s": 12.38,
+"w": 500,
+"f": "figtree",
+"c": "#99dbfe",
+"tag": "span"
+},
+{
+"t": "2.340 tarefas",
+"x": 485.0,
+"y": 462.72,
+"s": 11.52,
+"w": 500,
+"f": "figtree",
+"c": "#d1e1fe",
+"tag": "span"
+},
+{
+"t": "Rafael",
+"x": 780.0,
+"y": 381.96,
+"s": 14.74,
+"w": 600,
+"f": "figtree",
+"c": "#faffff",
+"tag": "h3"
+},
+{
+"t": "Online",
+"x": 797.0,
+"y": 408.55,
+"s": 11.99,
+"w": 500,
+"f": "figtree",
+"c": "#7ef2c0",
+"tag": "span"
+},
+{
+"t": "Prospecção de Leads",
+"x": 780.0,
+"y": 436.16,
+"s": 12.76,
+"w": 500,
+"f": "figtree",
+"c": "#94d9ff",
+"tag": "span"
+},
+{
+"t": "1.980 tarefas",
+"x": 804.0,
+"y": 462.51,
+"s": 11.79,
+"w": 500,
+"f": "figtree",
+"c": "#d4e2ff",
+"tag": "span"
+},
+{
+"t": "Sofia",
+"x": 1102.0,
+"y": 382.26,
+"s": 14.89,
+"w": 600,
+"f": "figtree",
+"c": "#fbffff",
+"tag": "h3"
+},
+{
+"t": "Online",
+"x": 1120.0,
+"y": 408.33,
+"s": 12.33,
+"w": 500,
+"f": "figtree",
+"c": "#79e2af",
+"tag": "span"
+},
+{
+"t": "Gestão de Agenda",
+"x": 1102.0,
+"y": 436.42,
+"s": 12.69,
+"w": 500,
+"f": "figtree",
+"c": "#badefe",
+"tag": "span"
+},
+{
+"t": "1.640 tarefas",
+"x": 1127.0,
+"y": 462.71,
+"s": 11.6,
+"w": 500,
+"f": "figtree",
+"c": "#d4e4ff",
+"tag": "span"
+},
+{
+"t": "Miguel",
+"x": 1436.0,
+"y": 381.86,
+"s": 15.74,
+"w": 600,
+"f": "figtree",
+"c": "#f9ffff",
+"tag": "h3"
+},
+{
+"t": "Em execução",
+"x": 1454.0,
+"y": 408.3,
+"s": 12.0,
+"w": 500,
+"f": "figtree",
+"c": "#ecc37e",
+"tag": "span"
+},
+{
+"t": "Análise de Dados",
+"x": 1436.0,
+"y": 436.42,
+"s": 12.71,
+"w": 500,
+"f": "figtree",
+"c": "#98dcfe",
+"tag": "span"
+},
+{
+"t": "980 tarefas",
+"x": 1459.0,
+"y": 462.73,
+"s": 11.49,
+"w": 500,
+"f": "figtree",
+"c": "#d6e5ff",
+"tag": "span"
+},
+{
+"t": "Missões Ativas",
+"x": 341.0,
+"y": 528.11,
+"s": 17.62,
+"w": 700,
+"f": "figtree",
+"c": "#fcffff",
+"tag": "h2"
+},
+{
+"t": "Acompanhe o progresso das suas iniciativas.",
+"x": 340.0,
+"y": 551.06,
+"s": 13.73,
+"w": 400,
+"f": "figtree",
+"c": "#d1e1fd"
+},
+{
+"t": "Ver todas",
+"x": 908.0,
+"y": 539.47,
+"s": 11.55,
+"w": 500,
+"f": "figtree",
+"c": "#40a8e4",
+"tag": "span"
+},
+{
+"t": "Campanha de Lançamento",
+"x": 400.0,
+"y": 583.42,
+"s": 11.37,
+"w": 600,
+"f": "figtree",
+"c": "#f5fcff",
+"tag": "span"
+},
+{
+"t": "Marketing e Conteúdo",
+"x": 401.0,
+"y": 600.73,
+"s": 11.49,
+"w": 400,
+"f": "figtree",
+"c": "#b7cbeb",
+"tag": "span"
+},
+{
+"t": "Qualificação de Leads",
+"x": 401.0,
+"y": 631.52,
+"s": 11.71,
+"w": 600,
+"f": "figtree",
+"c": "#f6feff",
+"tag": "span"
+},
+{
+"t": "Comercial",
+"x": 401.0,
+"y": 648.73,
+"s": 11.45,
+"w": 400,
+"f": "figtree",
+"c": "#adbdda",
+"tag": "span"
+},
+{
+"t": "Suporte ao Cliente",
+"x": 401.0,
+"y": 681.51,
+"s": 11.76,
+"w": 600,
+"f": "figtree",
+"c": "#f7feff",
+"tag": "span"
+},
+{
+"t": "Atendimento",
+"x": 400.0,
+"y": 699.72,
+"s": 11.56,
+"w": 400,
+"f": "figtree",
+"c": "#b0c1e1",
+"tag": "span"
+},
+{
+"t": "Relatórios Operacionais",
+"x": 401.0,
+"y": 732.55,
+"s": 12.03,
+"w": 600,
+"f": "figtree",
+"c": "#f7ffff",
+"tag": "span"
+},
+{
+"t": "Back-office",
+"x": 401.0,
+"y": 748.72,
+"s": 11.54,
+"w": 400,
+"f": "figtree",
+"c": "#afbede",
+"tag": "span"
+},
+{
+"t": "75%",
+"x": 800.0,
+"y": 590.74,
+"s": 11.4,
+"w": 600,
+"f": "figtree",
+"c": "#f4fdff",
+"tag": "span"
+},
+{
+"t": "60%",
+"x": 799.0,
+"y": 640.74,
+"s": 11.39,
+"w": 600,
+"f": "figtree",
+"c": "#f4ffff",
+"tag": "span"
+},
+{
+"t": "90%",
+"x": 799.0,
+"y": 689.74,
+"s": 11.39,
+"w": 600,
+"f": "figtree",
+"c": "#f4fcff",
+"tag": "span"
+},
+{
+"t": "45%",
+"x": 799.0,
+"y": 740.73,
+"s": 11.44,
+"w": 600,
+"f": "figtree",
+"c": "#f0fbff",
+"tag": "span"
+},
+{
+"t": "Prazo",
+"x": 876.0,
+"y": 583.43,
+"s": 11.6,
+"w": 500,
+"f": "figtree",
+"c": "#a4b3cf",
+"tag": "span"
+},
+{
+"t": "20 Out",
+"x": 876.0,
+"y": 599.57,
+"s": 11.6,
+"w": 500,
+"f": "figtree",
+"c": "#deb69f",
+"tag": "span"
+},
+{
+"t": "Prazo",
+"x": 876.0,
+"y": 632.32,
+"s": 11.73,
+"w": 500,
+"f": "figtree",
+"c": "#adb9d8",
+"tag": "span"
+},
+{
+"t": "25 Out",
+"x": 876.0,
+"y": 648.71,
+"s": 11.73,
+"w": 500,
+"f": "figtree",
+"c": "#e9bda7",
+"tag": "span"
+},
+{
+"t": "Prazo",
+"x": 876.0,
+"y": 682.14,
+"s": 11.94,
+"w": 500,
+"f": "figtree",
+"c": "#9caac4",
+"tag": "span"
+},
+{
+"t": "18 Out",
+"x": 876.0,
+"y": 698.66,
+"s": 11.94,
+"w": 500,
+"f": "figtree",
+"c": "#e8ac89",
+"tag": "span"
+},
+{
+"t": "Prazo",
+"x": 876.0,
+"y": 732.4,
+"s": 11.63,
+"w": 500,
+"f": "figtree",
+"c": "#99abc7",
+"tag": "span"
+},
+{
+"t": "30 Out",
+"x": 876.0,
+"y": 748.59,
+"s": 11.63,
+"w": 500,
+"f": "figtree",
+"c": "#e4b8a0",
+"tag": "span"
+},
+{
+"t": "Resultados",
+"x": 1041.0,
+"y": 530.55,
+"s": 17.03,
+"w": 700,
+"f": "figtree",
+"c": "#fbffff",
+"tag": "h2"
+},
+{
+"t": "Evolução das suas operações.",
+"x": 1041.0,
+"y": 554.18,
+"s": 12.63,
+"w": 400,
+"f": "figtree",
+"c": "#bccdeb"
+},
+{
+"t": "Ver detalhes",
+"x": 1544.0,
+"y": 539.47,
+"s": 11.52,
+"w": 500,
+"f": "figtree",
+"c": "#43abe3",
+"tag": "span"
+},
+{
+"t": "12.480",
+"x": 1407.0,
+"y": 560.01,
+"s": 14.94,
+"w": 500,
+"f": "figtree",
+"c": "#f9ffff",
+"tag": "span"
+},
+{
+"t": "tarefas executadas",
+"x": 1407.0,
+"y": 577.73,
+"s": 11.49,
+"w": 500,
+"f": "figtree",
+"c": "#d5e6ff",
+"tag": "span"
+},
+{
+"t": "+24%",
+"x": 1407.0,
+"y": 591.62,
+"s": 10.73,
+"w": 500,
+"f": "figtree",
+"c": "#a5d4b0",
+"tag": "span"
+},
+{
+"t": "15K",
+"x": 1042.0,
+"y": 585.38,
+"s": 12.5,
+"w": 400,
+"f": "figtree",
+"c": "#a4b2ce",
+"tag": "span"
+},
+{
+"t": "10K",
+"x": 1042.0,
+"y": 614.54,
+"s": 12.05,
+"w": 400,
+"f": "figtree",
+"c": "#98abc8",
+"tag": "span"
+},
+{
+"t": "5K",
+"x": 1048.0,
+"y": 643.26,
+"s": 11.76,
+"w": 400,
+"f": "figtree",
+"c": "#9fb1d2",
+"tag": "span"
+},
+{
+"t": "0",
+"x": 1056.0,
+"y": 671.69,
+"s": 9.38,
+"w": 400,
+"f": "figtree",
+"c": "#8394af",
+"tag": "span"
+},
+{
+"t": "1 Out",
+"x": 1073.0,
+"y": 683.34,
+"s": 12.24,
+"w": 400,
+"f": "figtree",
+"c": "#8d9bb6",
+"tag": "span"
+},
+{
+"t": "5 Out",
+"x": 1155.0,
+"y": 683.5,
+"s": 11.86,
+"w": 400,
+"f": "figtree",
+"c": "#8d9bb5",
+"tag": "span"
+},
+{
+"t": "10 Out",
+"x": 1232.0,
+"y": 683.33,
+"s": 12.29,
+"w": 400,
+"f": "figtree",
+"c": "#9faec7",
+"tag": "span"
+},
+{
+"t": "15 Out",
+"x": 1322.0,
+"y": 683.62,
+"s": 12.54,
+"w": 400,
+"f": "figtree",
+"c": "#929ebb",
+"tag": "span"
+},
+{
+"t": "20 Out",
+"x": 1413.0,
+"y": 683.52,
+"s": 11.71,
+"w": 400,
+"f": "figtree",
+"c": "#95a2c1",
+"tag": "span"
+},
+{
+"t": "25 Out",
+"x": 1502.0,
+"y": 683.55,
+"s": 11.97,
+"w": 400,
+"f": "figtree",
+"c": "#95a2bb",
+"tag": "span"
+},
+{
+"t": "30 Out",
+"x": 1590.0,
+"y": 683.51,
+"s": 11.78,
+"w": 400,
+"f": "figtree",
+"c": "#95a2be",
+"tag": "span"
+},
+{
+"t": "Uso por área",
+"x": 1043.0,
+"y": 706.55,
+"s": 15.18,
+"w": 600,
+"f": "figtree",
+"c": "#f9ffff",
+"tag": "h3"
+},
+{
+"t": "Atendimento",
+"x": 1241.0,
+"y": 712.72,
+"s": 11.56,
+"w": 400,
+"f": "figtree",
+"c": "#bdcdea",
+"tag": "span"
+},
+{
+"t": "Comercial",
+"x": 1242.0,
+"y": 730.73,
+"s": 11.45,
+"w": 400,
+"f": "figtree",
+"c": "#b0bed7",
+"tag": "span"
+},
+{
+"t": "Operações",
+"x": 1242.0,
+"y": 748.73,
+"s": 11.45,
+"w": 400,
+"f": "figtree",
+"c": "#adbad7",
+"tag": "span"
+},
+{
+"t": "Marketing",
+"x": 1242.0,
+"y": 767.53,
+"s": 11.63,
+"w": 400,
+"f": "figtree",
+"c": "#aebee3",
+"tag": "span"
+},
+{
+"t": "35%",
+"x": 1596.0,
+"y": 712.56,
+"s": 11.92,
+"w": 600,
+"f": "figtree",
+"c": "#f7ffff",
+"tag": "span"
+},
+{
+"t": "28%",
+"x": 1597.0,
+"y": 730.64,
+"s": 11.06,
+"w": 600,
+"f": "figtree",
+"c": "#f2fbff",
+"tag": "span"
+},
+{
+"t": "22%",
+"x": 1597.0,
+"y": 748.42,
+"s": 11.34,
+"w": 600,
+"f": "figtree",
+"c": "#f2f9ff",
+"tag": "span"
+},
+{
+"t": "15%",
+"x": 1597.0,
+"y": 767.34,
+"s": 12.22,
+"w": 600,
+"f": "figtree",
+"c": "#ebf4ff",
+"tag": "span"
+},
+{
+"t": "Integrações",
+"x": 341.0,
+"y": 805.86,
+"s": 17.58,
+"w": 700,
+"f": "figtree",
+"c": "#fbffff",
+"tag": "h2"
+},
+{
+"t": "Conecte os seus sistemas.",
+"x": 340.0,
+"y": 830.45,
+"s": 13.04,
+"w": 400,
+"f": "figtree",
+"c": "#d2e4ff"
+},
+{
+"t": "Ver todas",
+"x": 651.0,
+"y": 816.47,
+"s": 11.55,
+"w": 500,
+"f": "figtree",
+"c": "#4cb1e6",
+"tag": "span"
+},
+{
+"t": "Biblioteca de Agentes",
+"x": 775.0,
+"y": 806.22,
+"s": 16.52,
+"w": 700,
+"f": "figtree",
+"c": "#fcffff",
+"tag": "h2"
+},
+{
+"t": "Explore perfis e soluções.",
+"x": 775.0,
+"y": 829.25,
+"s": 13.14,
+"w": 400,
+"f": "figtree",
+"c": "#d3e4ff"
+},
+{
+"t": "Explorar",
+"x": 1011.0,
+"y": 816.46,
+"s": 11.62,
+"w": 500,
+"f": "figtree",
+"c": "#53bbef",
+"tag": "span"
+},
+{
+"t": "Clara",
+"x": 1131.0,
+"y": 806.41,
+"s": 17.77,
+"w": 700,
+"f": "figtree",
+"c": "#fbffff",
+"tag": "h2"
+},
+{
+"t": "Sua consultora de soluções.",
+"x": 1132.0,
+"y": 828.28,
+"s": 13.49,
+"w": 400,
+"f": "figtree",
+"c": "#d1e2ff"
+},
+{
+"t": "Precisa reforçar uma equipa, implementar um agente",
+"x": 1132.0,
+"y": 847.7,
+"s": 11.5,
+"w": 400,
+"f": "figtree",
+"c": "#cfe0fc"
+},
+{
+"t": "ou falar sobre um projeto?",
+"x": 1131.0,
+"y": 862.75,
+"s": 11.5,
+"w": 400,
+"f": "figtree",
+"c": "#d1e2ff"
+},
+{
+"t": "Conversar com a Clara",
+"x": 1177.0,
+"y": 893.98,
+"s": 15.12,
+"w": 600,
+"f": "bsc",
+"c": "#001834",
+"tag": "span"
+}
+],
+"links": [
+{
+"r": [
+30,
+20,
+260,
+80
+],
+"href": "/",
+"label": "AtlasHub.SI — início"
+},
+{
+"r": [
+14,
+115,
+271,
+165
+],
+"href": "/",
+"label": "Início"
+},
+{
+"r": [
+14,
+170,
+271,
+220
+],
+"href": "/biblioteca",
+"label": "Meus Agentes"
+},
+{
+"r": [
+14,
+222,
+271,
+272
+],
+"href": "/assessment",
+"label": "Missões"
+},
+{
+"r": [
+14,
+274,
+271,
+326
+],
+"href": "/packs",
+"label": "Processos"
+},
+{
+"r": [
+14,
+326,
+271,
+378
+],
+"href": "/packs",
+"label": "Integrações"
+},
+{
+"r": [
+14,
+378,
+271,
+430
+],
+"href": "/portal",
+"label": "Resultados"
+},
+{
+"r": [
+14,
+430,
+271,
+482
+],
+"href": "/biblioteca",
+"label": "Equipe"
+},
+{
+"r": [
+14,
+482,
+271,
+535
+],
+"href": "/login",
+"label": "Configurações"
+},
+{
+"r": [
+1540,
+315,
+1640,
+343
+],
+"href": "/biblioteca",
+"label": "Ver toda a equipa de agentes"
+},
+{
+"r": [
+335,
+364,
+636,
+502
+],
+"href": "/simulador/clinic-appointment-confirmation",
+"label": "Clara — Atendimento ao Cliente"
+},
+{
+"r": [
+650,
+364,
+960,
+502
+],
+"href": "/simulador/sales-assistant",
+"label": "Rafael — Prospecção de Leads"
+},
+{
+"r": [
+975,
+364,
+1290,
+502
+],
+"href": "/simulador/administrative-secretary",
+"label": "Sofia — Gestão de Agenda"
+},
+{
+"r": [
+1306,
+364,
+1633,
+502
+],
+"href": "/simulador/finance-assistant",
+"label": "Miguel — Análise de Dados"
+},
+{
+"r": [
+900,
+533,
+985,
+558
+],
+"href": "/assessment",
+"label": "Ver todas as missões"
+},
+{
+"r": [
+1540,
+533,
+1635,
+558
+],
+"href": "/portal",
+"label": "Ver detalhes dos resultados"
+},
+{
+"r": [
+645,
+812,
+725,
+836
+],
+"href": "/packs",
+"label": "Ver todas as integrações"
+},
+{
+"r": [
+1005,
+812,
+1080,
+836
+],
+"href": "/biblioteca",
+"label": "Explorar a Biblioteca de Agentes"
+},
+{
+"r": [
+770,
+850,
+1070,
+922
+],
+"href": "/biblioteca",
+"label": "Biblioteca de Agentes"
+},
+{
+"r": [
+1131,
+885,
+1356,
+921
+],
+"href": "/assessment",
+"label": "Conversar com a Clara"
+}
+]
+}

@@ -1,0 +1,97 @@
+/* Visual Pack V1 — pixel-faithful mockup rendering (components/MockupCanvas.tsx). */
+
+@font-face { font-family: "Figtree"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/figtree-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/figtree-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/figtree-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/figtree-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Figtree"; font-style: normal; font-weight: 800; font-display: swap; src: url("/fonts/figtree-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Semi Condensed"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/barlow-semi-condensed-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Semi Condensed"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/barlow-semi-condensed-latin-600-normal.woff2") format("woff2"); }
+
+.mk {
+  background: #040c18;
+  width: 100%;
+}
+
+.mk-stage {
+  --W: 1672;
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  overflow: hidden;
+  container-type: inline-size;
+  isolation: isolate;
+}
+
+.mk-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.mk-t {
+  position: absolute;
+  left: calc(var(--x) * 100cqw / var(--W));
+  top: calc(var(--y) * 100cqw / var(--W));
+  font-family: "Figtree", system-ui, sans-serif;
+  font-size: calc(var(--s) * 100cqw / var(--W));
+  letter-spacing: calc(var(--ls) * 100cqw / var(--W));
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  font-kerning: normal;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  pointer-events: none;
+}
+
+.mk-c {
+  font-family: "Barlow Semi Condensed", "Figtree", system-ui, sans-serif;
+}
+
+.mk-a {
+  position: absolute;
+  left: calc(var(--x) * 100cqw / var(--W));
+  top: calc(var(--y) * 100cqw / var(--W));
+  width: calc(var(--lw) * 100cqw / var(--W));
+  height: calc(var(--lh) * 100cqw / var(--W));
+  border-radius: calc(10 * 100cqw / var(--W));
+  z-index: 2;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mk-a:hover {
+  background: rgba(64, 223, 233, 0.07);
+}
+
+.mk-a:focus-visible {
+  outline: 2px solid #40dfe9;
+  outline-offset: 2px;
+}
+
+.mk-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Demo label: the app screens show illustrative data (NEXT_PUBLIC_DEMO_BADGE=off hides it). */
+.mk-badge {
+  margin: 0;
+  padding: 10px 16px 14px;
+  text-align: center;
+  background: #040c18;
+  color: #87a2bd;
+  font: 500 12px/1.2 "Figtree", system-ui, sans-serif;
+  letter-spacing: 0.04em;
+}

@@ -14,6 +14,12 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Principal" className="flex gap-6 text-sm">
           <Link href="/" className="pb-1 text-mute no-underline hover:text-fg">
+            Painel
+          </Link>
+          <Link href="/biblioteca" className="pb-1 text-mute no-underline hover:text-fg">
+            Biblioteca
+          </Link>
+          <Link href="/packs" className="pb-1 text-mute no-underline hover:text-fg">
             Packs
           </Link>
           <a

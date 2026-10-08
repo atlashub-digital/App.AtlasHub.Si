@@ -19,6 +19,10 @@ Node ≥ 22.
 5. Nunca segredos nem dados reais de leads, clientes ou pacientes.
 6. Acessibilidade: alvos ≥ 44 px, `button`/`a` reais, `aria-label` em botões só com ícone, `aria-live` na conversa.
 
+## Ecrãs 1:1 (Visual Pack V1)
+- `/` (painel) e `/biblioteca` reproduzem as maquetes 05 e 04 com `MockupCanvas`. Os dados estão em `src/data/mockups/*.json` e o fundo em `public/mockups/*.webp`. São gerados pelo pipeline em `AtlasHub.Si/design/visual-pack-v1/fidelity`: não se editam à mão, exceto para trocar uma frase.
+- Os dados destes ecrãs são ilustrativos (simulação para apresentar a clientes, decisão da direção de 08/10/2026). O catálogo real está em `/packs`.
+
 ## O que não mexer
 - `src/data/catalog.json` é gerado: só muda via `npm run sync:catalog`, num commit `chore(catalog): atlas-agent-packs v0.X.Y`. Textos da Clara, cenários e métricas mudam no pack, não aqui.
 - `src/lib/metrics.ts` é port de `atlas-agent-packs/lib/metrics.mjs` e tem de se comportar de forma idêntica (mesmos valores do PACK-001 nos testes dos dois repositórios).
