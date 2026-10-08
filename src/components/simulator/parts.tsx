@@ -3,7 +3,7 @@ import { formatValue } from "@/lib/format";
 import { timestamp, type StepState } from "@/lib/simulator";
 
 export function Eyebrow({ children }: { children: string }) {
-  return <div className="font-mono text-[11px] tracking-[0.16em] text-dim">{children}</div>;
+  return <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan3">{children}</div>;
 }
 
 /* ───────── Clara ───────── */
@@ -20,14 +20,14 @@ export function ClaraPanel({
   return (
     <aside
       aria-label="Clara"
-      className="flex min-w-0 max-w-[380px] flex-[1_1_300px] flex-col rounded-lg border border-line bg-panel"
+      className="ah-card ah-bar flex min-w-0 max-w-[380px] flex-[1_1_300px] flex-col"
     >
       <div className="flex items-center gap-3 border-b border-line px-5 py-4">
-        <div className="flex size-10 items-center justify-center rounded-full border border-accent bg-panel2 font-black text-accent">
+        <div className="flex size-11 flex-none items-center justify-center rounded-full bg-accent text-lg font-extrabold text-accent-ink shadow-[0_0_22px_rgba(22,216,237,0.45)]">
           C
         </div>
         <div>
-          <div className="font-bold">Clara</div>
+          <div className="flex items-center gap-2 font-bold">Clara <span className="ah-chip border-ok/40 px-2! py-0! text-[10px] text-ok"><span className="ah-dot" aria-hidden="true" />online</span></div>
           <div className="text-xs text-mute">Orquestra a simulação · AtlasHub</div>
         </div>
       </div>
@@ -35,7 +35,7 @@ export function ClaraPanel({
         {messages.map((text) => (
           <div
             key={text}
-            className="rounded-[8px_8px_8px_2px] border border-line bg-panel2 px-3.5 py-3 text-sm text-fg"
+            className="ah-rise rounded-[14px_14px_14px_4px] border border-line bg-panel2/80 px-4 py-3 text-sm text-fg"
           >
             {text}
           </div>
@@ -47,7 +47,7 @@ export function ClaraPanel({
                 key={q.id}
                 type="button"
                 onClick={q.onPick}
-                className="min-h-11 cursor-pointer rounded-lg border border-accent bg-transparent px-3.5 py-2 text-[13px] text-fg hover:bg-panel2"
+                className="ah-btn-ghost px-4! text-[15px]!"
               >
                 {q.label}
               </button>
@@ -103,7 +103,7 @@ export function ChatPanel({
 }) {
   const runLabel = playing ? "A executar…" : finished ? "Executar de novo" : "Executar";
   return (
-    <div className="flex min-w-0 flex-[999_1_520px] flex-col rounded-lg border border-line bg-panel">
+    <div className="ah-card flex min-w-0 flex-[999_1_520px] flex-col overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5">
         <div>
           <div className="font-bold">{pack.labels?.header ?? pack.name}</div>
@@ -113,7 +113,7 @@ export function ChatPanel({
           <button
             type="button"
             onClick={onRun}
-            className="flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border-0 bg-accent px-[18px] py-2.5 text-sm font-bold text-accent-ink"
+            className="ah-btn"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polygon points="6 4 20 12 6 20 6 4" />
@@ -123,7 +123,7 @@ export function ChatPanel({
           <button
             type="button"
             onClick={onStep}
-            className="min-h-11 cursor-pointer rounded-lg border border-line2 bg-transparent px-3.5 py-2.5 text-sm text-fg hover:bg-panel2"
+            className="ah-btn-quiet"
           >
             Passo a passo
           </button>
@@ -131,7 +131,7 @@ export function ChatPanel({
             type="button"
             onClick={onReset}
             aria-label="Repor simulação"
-            className="flex size-11 cursor-pointer items-center justify-center rounded-lg border border-line2 bg-transparent text-fg hover:bg-panel2"
+            className="ah-btn-quiet size-11 p-0!"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M3 12a9 9 0 1 0 3-6.7" />
@@ -143,19 +143,19 @@ export function ChatPanel({
       <div
         ref={scrollRef}
         aria-live="polite"
-        className="flex max-h-[560px] min-h-[460px] grow flex-col gap-2.5 overflow-y-auto bg-chat p-5"
+        className="flex max-h-[560px] min-h-[460px] grow flex-col gap-3 overflow-y-auto bg-chat/80 bg-[radial-gradient(rgba(53,91,117,0.35)_1px,transparent_1px)] bg-size-[22px_22px] p-5"
       >
         {events.length === 0 && (
           <div className="m-auto max-w-[340px] text-center text-dim">
-            <div className="font-mono text-xs tracking-[0.16em] text-accent">PRONTO</div>
+            <div className="text-xs font-semibold tracking-[0.24em] text-cyan3">PRONTO</div>
             <p className="mt-2">Carregue em Executar para ver a simulação, ou avance passo a passo.</p>
           </div>
         )}
         {events.map((ev, i) => {
           if (ev.type === "system") {
             return (
-              <div key={i} className="flex justify-center">
-                <div className="max-w-[90%] rounded-md border border-dashed border-line bg-panel2 px-2.5 py-1 text-center font-mono text-[11.5px] text-sys">
+              <div key={i} className="ah-rise flex justify-center">
+                <div className="max-w-[90%] rounded-full border border-dashed border-line2 bg-panel2/80 px-3.5 py-1 text-center font-mono text-[11.5px] text-sys">
                   {ev.text}
                 </div>
               </div>
@@ -163,16 +163,16 @@ export function ChatPanel({
           }
           const agent = ev.type === "agent";
           return (
-            <div key={i} className={agent ? "flex justify-end" : "flex justify-start"}>
+            <div key={i} className={"ah-rise flex " + (agent ? "justify-end" : "justify-start")}>
               <div
                 className={
-                  "max-w-[74%] border px-3.5 py-2.5 text-sm " +
+                  "max-w-[78%] border px-4 py-3 text-sm " +
                   (agent
-                    ? "rounded-[10px_10px_2px_10px] border-agent-line bg-agent-bg"
-                    : "rounded-[10px_10px_10px_2px] border-line bg-user-bg")
+                    ? "rounded-[16px_16px_4px_16px] border-agent-line bg-[linear-gradient(135deg,#0e3a52,#0b2a40)] shadow-[0_0_20px_rgba(22,216,237,0.08)]"
+                    : "rounded-[16px_16px_16px_4px] border-line bg-user-bg")
                 }
               >
-                <div className={"mb-0.5 font-mono text-[11px] tracking-[0.06em] " + (agent ? "text-accent" : "text-mute")}>
+                <div className={"mb-1 text-[11px] font-semibold tracking-[0.14em] " + (agent ? "text-cyan3" : "text-dim")}>
                   {whoLabel(pack, ev)}
                 </div>
                 <div>{ev.text}</div>
@@ -189,24 +189,9 @@ export function ChatPanel({
 
 const TAG: Record<StepState, string> = { pending: "", done: "OK", active: "AGORA", skip: "NÃO NECESSÁRIA", human: "PESSOA" };
 
-function dotClass(state: StepState): string {
-  const base =
-    "flex size-[30px] flex-none items-center justify-center rounded-full font-mono text-[11px] font-bold ";
-  switch (state) {
-    case "done":
-    case "active":
-      return base + "bg-accent text-accent-ink";
-    case "human":
-      return base + "bg-warn text-accent-ink";
-    case "skip":
-      return base + "border border-dim text-dim";
-    default:
-      return base + "border border-line2 text-dim";
-  }
-}
 
 function tagClass(state: StepState): string {
-  const base = "ml-auto flex-none font-mono text-[10px] tracking-[0.1em] ";
+  const base = "ml-auto flex-none pt-2 text-[10px] font-semibold tracking-[0.14em] ";
   if (state === "human") return base + "text-warn";
   if (state === "skip") return base + "text-dim";
   return base + "text-accent";
@@ -214,13 +199,13 @@ function tagClass(state: StepState): string {
 
 export function Timeline({ steps, states }: { steps: Step[]; states: StepState[] }) {
   return (
-    <div className="rounded-lg border border-line bg-panel px-5 py-[18px]">
+    <div className="ah-card px-5 py-[18px]">
       <Eyebrow>PERCURSO DA AUTOMAÇÃO</Eyebrow>
       <ol className="m-0 mt-3.5 flex list-none flex-col gap-1 p-0">
         {steps.map((step, i) => (
-          <li key={step.id} className="flex items-start gap-3 py-2">
-            <div className={dotClass(states[i])}>{String(i + 1).padStart(2, "0")}</div>
-            <div className="min-w-0">
+          <li key={step.id} className="relative flex items-start gap-3 py-2 [&:not(:last-child)]:after:absolute [&:not(:last-child)]:after:left-[16px] [&:not(:last-child)]:after:top-[44px] [&:not(:last-child)]:after:h-[calc(100%-38px)] [&:not(:last-child)]:after:w-px [&:not(:last-child)]:after:bg-line">
+            <div className="ah-step" data-state={states[i]}>{String(i + 1).padStart(2, "0")}</div>
+            <div className="min-w-0 pt-1.5">
               <div className={"text-sm font-bold " + (states[i] === "pending" ? "text-dim" : "text-fg")}>{step.label}</div>
               {step.description && <div className="text-xs text-dim">{step.description}</div>}
             </div>
@@ -241,12 +226,12 @@ function logLine(ev: ScenarioEvent): string {
 
 export function EventLog({ events }: { events: ScenarioEvent[] }) {
   return (
-    <div className="grow rounded-lg border border-line bg-panel px-5 py-[18px]">
+    <div className="ah-card grow px-5 py-[18px]">
       <Eyebrow>REGISTO DE EVENTOS</Eyebrow>
       <div className="mt-3 flex flex-col gap-1.5 font-mono text-xs text-sys">
         {events.length === 0 && <div className="text-dim">À espera do gatilho…</div>}
         {events.map((ev, i) => (
-          <div key={i} className="flex gap-2.5">
+          <div key={i} className="ah-rise flex gap-2.5">
             <span className="text-dim">{timestamp(i)}</span>
             <span className="min-w-0">{logLine(ev)}</span>
           </div>
@@ -271,7 +256,7 @@ export function ImpactPanel({
 }) {
   const { inputs, outputs, disclaimer } = pack.metrics;
   return (
-    <section aria-label="Impacto estimado" className="flex flex-wrap gap-7 rounded-lg border border-line bg-panel p-6">
+    <section aria-label="Impacto estimado" className="ah-card ah-bar flex flex-wrap gap-7 p-6">
       <div className="min-w-0 flex-[1_1_420px]">
         <Eyebrow>01 / OS SEUS NÚMEROS</Eyebrow>
         <p className="mb-4 mt-1.5 text-[13px] text-mute">Valores de exemplo. Substitua pelos seus.</p>
@@ -289,7 +274,7 @@ export function ImpactPanel({
                     type="button"
                     onClick={() => set(v - step)}
                     aria-label={`Diminuir: ${inp.label}`}
-                    className="size-11 cursor-pointer rounded-lg border border-line2 bg-panel2 text-lg text-fg hover:border-accent"
+                    className="ah-btn-quiet size-11 p-0! text-lg!"
                   >
                     −
                   </button>
@@ -298,7 +283,7 @@ export function ImpactPanel({
                     type="button"
                     onClick={() => set(v + step)}
                     aria-label={`Aumentar: ${inp.label}`}
-                    className="size-11 cursor-pointer rounded-lg border border-line2 bg-panel2 text-lg text-fg hover:border-accent"
+                    className="ah-btn-quiet size-11 p-0! text-lg!"
                   >
                     +
                   </button>
@@ -313,8 +298,8 @@ export function ImpactPanel({
         <Eyebrow>02 / CAPACIDADE, NÃO PROMESSAS</Eyebrow>
         <div className="grid grid-cols-2 gap-3">
           {outputs.map((o, i) => (
-            <div key={o.key} className="rounded-lg bg-panel2 p-4">
-              <div className={"text-[34px] font-black leading-none tracking-[-0.04em] " + (i === 1 ? "text-accent" : "")}>
+            <div key={o.key} className="rounded-xl border border-line bg-panel2/70 p-4">
+              <div className={"text-[34px] font-extrabold leading-none tracking-[-0.03em] tabular-nums " + (i === 1 ? "ah-accent" : "")}>
                 {formatValue(results[o.key] ?? 0, o.unit)}
               </div>
               <div className="mt-2 text-[13px] text-mute">{o.label}</div>
@@ -342,12 +327,12 @@ export function ImpactPanel({
 export function Guardrails({ items }: { items: Guardrail[] }) {
   if (items.length === 0) return null;
   return (
-    <section aria-label="Limites do agente" className="rounded-lg border border-line bg-panel p-6">
+    <section aria-label="Limites do agente" className="ah-card ah-bar p-6">
       <Eyebrow>LIMITES DO AGENTE (SEMPRE ATIVOS)</Eyebrow>
       <ul className="m-0 mt-3 grid list-none gap-2.5 p-0 md:grid-cols-2">
         {items.map((g) => (
           <li key={g.id} className="flex gap-3 text-sm text-mute">
-            <span className="mt-0.5 flex-none rounded border border-line2 px-1.5 font-mono text-[10px] leading-5 tracking-[0.08em] text-warn">
+            <span className="mt-0.5 inline-flex h-6 flex-none items-center rounded-full border border-warn/40 bg-warn/5 px-2 text-[10px] font-semibold leading-5 tracking-[0.1em] text-warn">
               {g.action.toUpperCase()}
             </span>
             <span>{g.rule}</span>

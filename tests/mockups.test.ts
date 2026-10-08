@@ -21,6 +21,7 @@ for (const s of [dashboard, library]) {
       const [x1, y1, x2, y2] = l.r;
       assert.ok(x1 < x2 && y1 < y2 && x2 <= s.W && y2 <= s.H, `${l.label} rect`);
       if (l.href.startsWith("https://atlashub.si/")) continue;
+      if (l.href.startsWith("https://wa.me/5562991903462")) continue;
       const sim = l.href.match(/^\/simulador\/([a-z-]+)$/);
       if (sim) assert.ok(slugs.has(sim[1]), `unknown pack ${sim[1]}`);
       else assert.ok(routes.includes(l.href), `unknown route ${l.href}`);

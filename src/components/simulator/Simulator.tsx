@@ -59,19 +59,21 @@ export function Simulator({ pack }: { pack: Pack }) {
   }
 
   return (
-    <main className="mx-auto flex max-w-[1360px] flex-col gap-7 px-8 pb-[72px] pt-10">
+    <main className="mx-auto flex max-w-[1360px] flex-col gap-7 px-4 pb-[72px] pt-10 sm:px-8">
       <section className="flex flex-wrap items-end justify-between gap-6">
-        <div className="min-w-0 flex-[1_1_560px]">
-          <div className="font-mono text-xs tracking-[0.16em] text-accent">
+        <div className="ah-rise min-w-0 flex-[1_1_560px]">
+          <div className="ah-eyebrow">
             LABORATÓRIO DE OPERAÇÕES / {pack.id} · {pack.segments.join(" · ").toUpperCase()}
           </div>
-          <h1 className="mb-2.5 mt-2.5 text-5xl font-black uppercase leading-[0.95] tracking-[-0.05em] md:text-6xl">
-            {pack.name}.
+          <h1 className="mb-3 mt-3 text-[clamp(36px,5vw,60px)] font-extrabold leading-[1.02] tracking-[-0.035em]">
+            {pack.name}
+            <span className="ah-accent">.</span>
           </h1>
           <p className="m-0 max-w-[640px] text-[17px] text-mute">{pack.summary}</p>
         </div>
         <div className="flex flex-col items-start gap-3">
-          <span className="rounded-md border border-[#6b4a12] px-2.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-warn">
+          <span className="ah-chip border-warn/40 bg-warn/5 text-[11px] tracking-[0.14em] text-warn">
+            <span className="ah-dot" aria-hidden="true" />
             SIMULAÇÃO · DADOS FICTÍCIOS · SEM EXECUÇÃO EXTERNA
           </span>
           <div role="group" aria-label="Cenário" className="flex flex-wrap gap-2">
@@ -83,12 +85,7 @@ export function Simulator({ pack }: { pack: Pack }) {
                   type="button"
                   aria-pressed={on}
                   onClick={() => dispatch({ type: "pick", id: s.id })}
-                  className={
-                    "min-h-11 cursor-pointer rounded-lg border px-4 py-2.5 text-sm " +
-                    (on
-                      ? "border-accent bg-accent font-bold text-accent-ink"
-                      : "border-line2 bg-panel text-fg hover:border-accent")
-                  }
+                  className="ah-btn-quiet"
                 >
                   {s.label}
                 </button>
@@ -130,7 +127,7 @@ export function Simulator({ pack }: { pack: Pack }) {
         {pack.commercial.cloud && (
           <ModeCard
             tag="CLOUD"
-            tagClass="text-accent"
+            tagClass="ah-accent"
             title="Ativar na nossa infraestrutura."
             text="O mesmo pack que acabou de testar, ligado aos seus sistemas e ao seu WhatsApp. Acompanhamento mensal das métricas."
             price={OFFER.cloud.priceLabel ?? PRICE_PENDING}
@@ -145,18 +142,20 @@ export function Simulator({ pack }: { pack: Pack }) {
             price={OFFER.onsite.priceLabel ?? PRICE_PENDING}
           />
         )}
-        <div className="flex min-w-0 flex-[1_1_300px] flex-col justify-center gap-3 rounded-lg border border-accent bg-panel2 p-[22px]">
+        <div className="ah-card flex min-w-0 flex-[1_1_300px] flex-col justify-center gap-3 border-accent/70! p-[22px] shadow-[0_0_32px_rgba(22,216,237,0.14)]">
           <div className="text-[17px] font-bold">Medir isto com os seus números reais</div>
           <a
             href={whatsappLink(`Olá, equipa AtlasHub. Gostaria de marcar um AI Business Assessment.\n\n${summary}`)}
-            className="flex min-h-11 items-center justify-center rounded-lg bg-accent font-bold text-accent-ink no-underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ah-btn"
           >
             Marcar AI Business Assessment →
           </a>
           <button
             type="button"
             onClick={copySummary}
-            className="min-h-11 cursor-pointer rounded-lg border border-line2 bg-transparent text-sm text-fg hover:border-accent"
+            className="ah-btn-quiet"
           >
             {copied ? "Resumo copiado" : "Copiar resumo da simulação"}
           </button>
@@ -183,9 +182,9 @@ function ModeCard({
   price: string;
 }) {
   return (
-    <div className="min-w-0 flex-[1_1_360px] rounded-lg border border-line bg-panel p-[22px]">
+    <div className="ah-card ah-bar min-w-0 flex-[1_1_360px] p-[22px]">
       <Eyebrow>{tag}</Eyebrow>
-      <h2 className={"mb-2 mt-1.5 text-[26px] font-black tracking-[-0.035em] " + tagClass}>{title}</h2>
+      <h2 className={"mb-2 mt-2 text-[26px] font-extrabold tracking-[-0.03em] " + tagClass}>{title}</h2>
       <p className="m-0 mb-3.5 text-sm text-mute">{text}</p>
       <div className="text-sm text-dim">{price}</div>
     </div>

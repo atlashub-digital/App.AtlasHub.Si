@@ -1,3 +1,35 @@
+import { whatsappLink } from "@/config/site";
+
+export const metadata = { title: "Portal do cliente · AtlasHub" };
+
 export default function Login() {
-  return <main className="mx-auto max-w-lg space-y-6 p-8"><h1 className="text-3xl font-bold">Portal do cliente</h1><p>Consulte a atividade do serviço gerido pela AtlasHub.</p><form action="/api/session" method="post" className="space-y-4"><label className="block">Email<input required name="email" type="email" className="block w-full rounded border p-3 text-black" /></label><label className="block">Palavra-passe<input required name="password" type="password" className="block w-full rounded border p-3 text-black" /></label><button className="rounded border p-3" type="submit">Entrar</button></form><p>O acesso requer uma conta autorizada no Supabase. Dados fictícios em staging.</p></main>;
+  return (
+    <main className="mx-auto max-w-[480px] px-4 pb-24 pt-12 sm:px-8 md:pt-20">
+      <div className="ah-card ah-bar ah-rise p-6 sm:p-8">
+        <p className="ah-eyebrow">Portal do cliente</p>
+        <h1 className="mt-3 text-3xl font-extrabold tracking-[-0.03em]">Entrar</h1>
+        <p className="mt-2 text-mute">Consulte a atividade do serviço gerido pela AtlasHub.</p>
+        <form action="/api/session" method="post" className="mt-6 flex flex-col gap-5">
+          <label className="block text-sm font-medium text-mute">
+            Email
+            <input required name="email" type="email" autoComplete="email" className="ah-input" />
+          </label>
+          <label className="block text-sm font-medium text-mute">
+            Palavra-passe
+            <input required name="password" type="password" autoComplete="current-password" className="ah-input" />
+          </label>
+          <button className="ah-btn w-full" type="submit">Entrar</button>
+        </form>
+        <p className="mt-5 text-xs text-dim">O acesso requer uma conta autorizada no Supabase. Dados fictícios em staging.</p>
+        <a
+          href={whatsappLink("Olá, equipa AtlasHub. Preciso de acesso ao portal do cliente.")}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-cyan3 hover:text-fg"
+        >
+          Ainda não tem acesso? Fale connosco ↗
+        </a>
+      </div>
+    </main>
+  );
 }

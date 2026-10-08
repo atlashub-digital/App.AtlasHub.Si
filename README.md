@@ -198,3 +198,7 @@ Desenho dos dados e das tabelas: ver `docs/APP-INTEGRATION.md` em atlas-agent-pa
 **Onde mudo o idioma do app?** O `lang` está em `layout.tsx`; as mensagens do agente têm o idioma do pack (`locale`). Decisão pendente: interface em PT-PT ou PT-BR (a landing atual está em PT-PT).
 
 Repositório privado. Nunca segredos, nunca dados reais de leads, clientes ou pacientes.
+
+## Linguagem visual (Visual Pack V1)
+
+`/packs`, `/simulador/[slug]`, `/assessment`, `/login`, `/portal` e o cabeçalho seguem as maquetes: tokens Tailwind em `src/app/globals.css` (Figtree; Barlow Semi Condensed em `--font-ui`) e classes partilhadas `ah-card`, `ah-bar` (barra ciano dos títulos de painel), `ah-btn` / `ah-btn-ghost` / `ah-btn-quiet` (pílulas), `ah-eyebrow`, `ah-chip`, `ah-input`, `ah-step` (círculos numerados com estado) e `ah-rise` (entrada em fade/rise, desligada com `prefers-reduced-motion`). Destinos ainda sem página própria (integrações, acesso ao portal, contacto) abrem o WhatsApp oficial via `whatsappLink()`.

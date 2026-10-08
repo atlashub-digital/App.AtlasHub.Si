@@ -6,7 +6,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <SiteHeader />
-      {children}
+      <div className="ah-page">{children}</div>
     </>
   );
 }
