@@ -1,5 +1,10 @@
 # App.AtlasHub.Si
 
+## Documentação técnica (backend, DB, infra)
+
+Ver [`docs/`](docs/README.md): arquitetura, integração com o AtlasHub-AI-WaaS, dados e privacidade, ambientes e backlog técnico.
+
+
 O **app.atlashub.si**: onde um lead experimenta os agentes da AtlasHub.SI no contexto do seu negócio, antes de contratar.
 
 > **Estado: V0.** Simulador em guião (sem LLM, sem backend) a funcionar com o PACK-001 · Confirmação de consultas.
