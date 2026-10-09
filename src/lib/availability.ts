@@ -23,3 +23,16 @@ export function features(env: Env) {
     portal: core && auth,
   };
 }
+
+/**
+ * What the lead can be told after submitting the assessment. Only a 2xx confirms the record and only a 4xx
+ * confirms it was refused; a timeout, a network failure or a 5xx may still have been persisted, so the result
+ * is unknown and the lead must not be told that nothing was saved (nor nudged to resubmit).
+ */
+export type Outcome = "sent" | "rejected" | "unknown";
+export function submissionOutcome(status: number | null): Outcome {
+  if (status === null) return "unknown";
+  if (status >= 200 && status < 300) return "sent";
+  if (status >= 400 && status < 500) return "rejected";
+  return "unknown";
+}

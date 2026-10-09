@@ -1,6 +1,6 @@
 import { apiUrl } from "@/lib/waas";
 import { whatsappLink } from "@/config/site";
-import { features } from "@/lib/availability";
+import { features, submissionOutcome } from "@/lib/availability";
 import { Unavailable } from "@/components/Unavailable";
 import { redirect } from "next/navigation";
 
@@ -11,14 +11,15 @@ const WA = whatsappLink("Olá, equipa AtlasHub. Gostaria de marcar um AI Busines
 export default async function Assessment({ searchParams }: { searchParams: Promise<{ sent?: string; error?: string }> }) {
   async function submit(form: FormData) {
     "use server";
-    let ok = false;
+    let status: number | null = null;
     try {
       const response = await fetch(`${apiUrl()}/v1/assessments`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ business: form.get("business"), need: form.get("need"), consent: form.get("consent") === "on" }), signal: AbortSignal.timeout(10000) });
-      ok = response.ok;
+      status = response.status;
     } catch {
-      ok = false;
+      status = null; // timeout or network failure: the Core may still have stored it
     }
-    redirect(ok ? "/assessment?sent=1" : "/assessment?error=1");
+    const outcome = submissionOutcome(status);
+    redirect(outcome === "sent" ? "/assessment?sent=1" : `/assessment?error=${outcome}`);
   }
   const { sent, error } = await searchParams;
   const available = features(process.env).assessment;
@@ -62,13 +63,22 @@ export default async function Assessment({ searchParams }: { searchParams: Promi
             cta="Marcar pelo WhatsApp"
             bare
           />
-        ) : error ? (
+        ) : error === "rejected" ? (
           <Unavailable
-            eyebrow="Pedido não registado"
-            title="Não foi possível registar o pedido."
-            text="O serviço não respondeu. Nada foi guardado. Pode tentar mais tarde ou falar já com a equipa pelo WhatsApp."
+            eyebrow="Pedido não aceite"
+            title="O pedido não foi aceite."
+            text="O serviço recusou os dados enviados, por isso o pedido não ficou registado. Reveja os campos e tente de novo, ou fale já com a equipa pelo WhatsApp."
             whatsapp={WA}
             cta="Falar pelo WhatsApp"
+            bare
+          />
+        ) : error ? (
+          <Unavailable
+            eyebrow="Sem confirmação"
+            title="Não recebemos a confirmação do pedido."
+            text="O pedido pode ter sido registado, mas o serviço não confirmou a tempo. Para não o duplicar, não o envie de novo: confirme com a equipa pelo WhatsApp."
+            whatsapp={WA}
+            cta="Confirmar pelo WhatsApp"
             bare
           />
         ) : sent ? (
