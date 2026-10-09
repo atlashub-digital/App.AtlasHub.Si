@@ -1,8 +1,22 @@
 import { whatsappLink } from "@/config/site";
+import { features } from "@/lib/availability";
+import { Unavailable } from "@/components/Unavailable";
 
 export const metadata = { title: "Portal do cliente · AtlasHub" };
 
 export default function Login() {
+  if (!features(process.env).portal)
+    return (
+      <main className="mx-auto max-w-[560px] px-4 pb-24 pt-12 sm:px-8 md:pt-20">
+        <Unavailable
+          eyebrow="Portal do cliente"
+          title="O portal do cliente está a mudar para o AtlasHub Workspaces."
+          text="O acesso de clientes ainda não está aberto nesta versão. Se já é cliente ou piloto da AtlasHub, a equipa dá-lhe acesso e acompanhamento pelo WhatsApp oficial."
+          whatsapp={whatsappLink("Olá, equipa AtlasHub. Preciso de acesso ao portal do cliente.")}
+          cta="Pedir acesso pelo WhatsApp"
+        />
+      </main>
+    );
   return (
     <main className="mx-auto max-w-[480px] px-4 pb-24 pt-12 sm:px-8 md:pt-20">
       <div className="ah-card ah-bar ah-rise p-6 sm:p-8">

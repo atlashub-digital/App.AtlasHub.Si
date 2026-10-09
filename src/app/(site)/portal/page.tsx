@@ -2,13 +2,15 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { waas, apiUrl } from "@/lib/waas";
+import { features } from "@/lib/availability";
 
 export const metadata = { title: "Portal do cliente · AtlasHub" };
 
 const shell = "mx-auto flex max-w-[1180px] flex-col gap-6 px-4 pb-24 pt-12 sm:px-8 md:pt-16";
 
 export default async function Portal({ searchParams }: { searchParams: Promise<{ tenant?: string }> }) {
-  if (!(await cookies()).get("waas_session")) redirect("/login");
+  // Without Core + auth configured there is no portal to show: /login explains and points to WhatsApp.
+  if (!features(process.env).portal || !(await cookies()).get("waas_session")) redirect("/login");
   const tenant = (await searchParams).tenant || "";
   if (!tenant)
     return (
